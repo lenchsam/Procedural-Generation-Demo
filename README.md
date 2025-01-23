@@ -16,7 +16,7 @@ Hi! This project shows **Procedural Generation** in **C#** using **Unity**. This
 
 ## About
 
-Athena Hex utilises a variety of different procedural generation techniques to achieve a hexagon grid-based map. These include poisson disc sampling, perlin noise, and more. It was originally inspired by a mobile game called *The Battle of Polytopia*; I wanted to replicate this in my own way. It's currently just a programming adventure for me, but I aim to add some unique and well designed mechanics in the future. It has some basic features like unit movement, and city placement. This is just intended as a project for me to learn different things like saving to files, algorithms etc. For that reason, it is not intended to be a full featured, polished game.
+This project utilises a variety of different procedural generation techniques to achieve a hexagon grid-based map. These include poisson disc sampling, perlin noise, and more. It was originally inspired by a mobile game called *The Battle of Polytopia*; I wanted to replicate this in my own way. It's currently just a programming adventure for me, but I aim to add some unique and well designed mechanics in the future. It has some basic features like unit movement, and city placement. This is just intended as a project for me to learn different things like saving to files, algorithms etc. For that reason, it is not intended to be a full featured, polished game.
 ## Useful Links
  - [Procedural Generation Class](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/ProceduralGeneration.cs)
  - [Grid Functions Class](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/HexGrid.cs)
@@ -43,7 +43,7 @@ Note that I used paid assets for the models and other paid plugins while creatin
  4. Experiment and explore the project!
 
 ### Changing Variables
-The variables that you'll probably want to have fun with are located in the ----GridManager---- game object. This manages all of the [procedural generation](https://github.com/lenchsam/AthenaHex/blob/main/Assets/Scripts/HexGrid/ProceduralGeneration.cs) and the [grid functions](https://github.com/lenchsam/AthenaHex/blob/main/Assets/Scripts/HexGrid/).
+The variables that you'll probably want to have fun with are located in the ----GridManager---- game object. This manages all of the [procedural generation](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/ProceduralGeneration.cs) and the [grid functions](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/HexGrid.cs).
 
 ### Common Issues
  - make sure to also lower poisson-disc radius when making map size smaller in editor. If this isn't done, it may freeze the editor.
