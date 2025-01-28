@@ -1,8 +1,8 @@
-# Procedural-Generation-Demo
+# Procedural Generation Demo
 
 Hi! This project shows **Procedural Generation** in **C#** using **Unity**. This readme file will explain all of the features currently implemented, as well as the future for the project as it is still in active development.
 ## Table of Contents
-- [Athena Hex](#athena-hex)
+- [Procedural Generation Demo](#procedural-generation-demo)
   * [About](#about)
   * [Useful Links](#useful-links)
   * [Features](#features)
@@ -11,7 +11,7 @@ Hi! This project shows **Procedural Generation** in **C#** using **Unity**. This
     + [Setup](#setup)
     + [Changing Variables](#changing-variables)
     + [Common Issues](#common-issues)
-  * [Future Features](#future-features)
+  * [Future Features](#potential-future-features)
 - [Contact](#contact)
 
 ## About
