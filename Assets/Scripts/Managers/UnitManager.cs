@@ -14,6 +14,7 @@ public class UnitManager : MonoBehaviour
     
     private PlayerController _playerController;
     private HexGrid _hexGrid;
+    FogOfWar _fogOfWar;
     private TurnManager _turnManager;
     private PathFinding _pathFinding;
     private ProceduralGeneration _proceduralGeneration;
@@ -22,6 +23,7 @@ public class UnitManager : MonoBehaviour
     {
         _turnManager = FindAnyObjectByType<TurnManager>();
         _hexGrid = FindAnyObjectByType<HexGrid>();
+        _fogOfWar = FindAnyObjectByType<FogOfWar>();
         _pathFinding = FindAnyObjectByType<PathFinding>();
         _playerController = FindAnyObjectByType<PlayerController>();
         _proceduralGeneration = FindAnyObjectByType<ProceduralGeneration>();
@@ -76,7 +78,7 @@ public class UnitManager : MonoBehaviour
                 if(_hexGrid.DistanceBetweenTiles(startCoords, targetCoords) > SelectedUnit.GetComponent<Units>().MaxMovement){return;}
 
                 //reveal tiles
-                if(_hexGrid.ShowFOW){_hexGrid.RevealTile(_hexGrid.GetTileScriptFromIntCords(new Vector2Int(targetCoords.x, targetCoords.y)).GetComponent<TileScript>());}
+                if(_fogOfWar.ShowFOW){_fogOfWar.RevealTile(_hexGrid.GetTileScriptFromIntCords(new Vector2Int(targetCoords.x, targetCoords.y)).GetComponent<TileScript>());}
 
                 //pathfinding
                 path = _pathFinding.FindPath(startCoords, targetCoords);
@@ -187,7 +189,7 @@ public class UnitManager : MonoBehaviour
             currentTeam += 1;
 
             //reveal the tiles around the unit
-            if(_hexGrid.ShowFOW){_hexGrid.RevealTile(tileScript);}
+            if(_fogOfWar.ShowFOW){_fogOfWar.RevealTile(tileScript);}
             _turnManager.PlayerTeam += 1;
         }
         _turnManager.PlayerTeam = e_Team.Team1;

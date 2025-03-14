@@ -10,6 +10,7 @@ public class ProceduralGeneration : MonoBehaviour
 
     //Then i used a flood fill algorithm to assign each tile a biome.
     HexGrid _hexGrid;
+    FogOfWar _fogOfWar;
     [BoxGroup("Assignables")]
     [SerializeField] GameObject _tilesParent;
     [BoxGroup("Assignables")]
@@ -46,6 +47,7 @@ public class ProceduralGeneration : MonoBehaviour
     }
     void Start(){
         _hexGrid = FindAnyObjectByType<HexGrid>(); 
+        _fogOfWar = FindAnyObjectByType<FogOfWar>();
         Points = poissonDiscSampling(_hexGrid.MapWidth, _hexGrid.MapHeight, PoissonRadius);
         Points = randomisePoints(Points);
     }
@@ -210,7 +212,7 @@ public class ProceduralGeneration : MonoBehaviour
                 
                 Tiles.Add(instantiated, instantiated.GetComponent<TileScript>());
 
-                if(_hexGrid.ShowFOW){_hexGrid.AddFogOfWar(tileInstScript);}
+                if(_fogOfWar.ShowFOW){_fogOfWar.AddFogOfWar(tileInstScript);}
             }
         }
         //ConvertGrassToCoastTiles();

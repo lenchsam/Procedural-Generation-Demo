@@ -9,14 +9,10 @@ public class HexGrid : MonoBehaviour
     
     [BoxGroup("Assignables")]
     [SerializeField] GameObject _tilesParent;
-    [BoxGroup("Assignables")]
-    [SerializeField] GameObject _fogOfWarPrefab;
     [BoxGroup("Map Settings")]
     public int MapWidth;
     [BoxGroup("Map Settings")]
     public int MapHeight;
-    [BoxGroup("Map Settings")]
-    public bool ShowFOW;
     [BoxGroup("Map Settings")]
     int _tileSize = 1; 
     [SerializeField] Dictionary<GameObject, TileScript> _tiles = new Dictionary<GameObject, TileScript>();
@@ -144,20 +140,6 @@ public class HexGrid : MonoBehaviour
     public Vector2Int GetIntCordsFromPosition(Vector2 pos){
         TileScript TS = GetTileScriptFromPosition(pos);
         return TS.IntCoords;
-    }
-    public void AddFogOfWar(TileScript tile){
-        GameObject fow = Instantiate(_fogOfWarPrefab, transform);
-        fow.name = "FOW " + tile.gameObject.name;
-        fow.transform.position = new Vector3(tile.transform.position.x, 0, tile.transform.position.z);
-        fow.GetComponent<TileScript>().IntCoords = tile.IntCoords;
-        tile.Fow = fow;
-        tile.gameObject.layer = LayerMask.NameToLayer("Hidden");
-    }
-    public void RevealTile(TileScript tile){
-        tile.Reveal();
-        foreach(GameObject neighbour in GetSurroundingTiles(tile.gameObject)){
-            neighbour.GetComponent<TileScript>().Reveal();
-        }
     }
 }
 public enum eOccupiedBy{

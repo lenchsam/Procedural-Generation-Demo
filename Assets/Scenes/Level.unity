@@ -1777,6 +1777,7 @@ GameObject:
   - component: {fileID: 1379350119}
   - component: {fileID: 1379350118}
   - component: {fileID: 1379350120}
+  - component: {fileID: 1379350121}
   m_Layer: 0
   m_Name: ----GridManager----
   m_TagString: Untagged
@@ -1797,11 +1798,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilesParent: {fileID: 788511299}
-  _fogOfWarPrefab: {fileID: 7825728450542590104, guid: 6b1f1a2907845974dbe0f80fc5310369,
-    type: 3}
   MapWidth: 50
   MapHeight: 50
-  ShowFOW: 0
 --- !u!4 &1379350119
 Transform:
   m_ObjectHideFlags: 0
@@ -1847,6 +1845,21 @@ MonoBehaviour:
   OnMapGenerated:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1379350121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379350117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e7ccf162a1baa4b91808a0556f4929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fogOfWarPrefab: {fileID: 7825728450542590104, guid: 6b1f1a2907845974dbe0f80fc5310369,
+    type: 3}
+  ShowFOW: 1
 --- !u!1 &1399497292
 GameObject:
   m_ObjectHideFlags: 0
