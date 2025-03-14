@@ -139,9 +139,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxMovement: 1
+  TookTurn: 0
   _maxAttackDistance: 1
   _damage: 25
-  TookTurn: 0
   _walkableTiles: []
 --- !u!1001 &7569976993912177737
 PrefabInstance:

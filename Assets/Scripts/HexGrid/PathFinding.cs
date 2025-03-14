@@ -12,17 +12,17 @@ public class PathFinding : MonoBehaviour
     public List<GameObject> FindPath(Vector2Int startCoords, Vector2Int targetCoords)
     {
         List<GameObject> path;
-        // Open list to track nodes to be evaluated
+        // open list to track nodes to be evaluated
         List<TileScript> openList = new List<TileScript>();
 
-        // Closed list to track nodes already evaluated
+        // closed list to track nodes already evaluated
         HashSet<TileScript> closedList = new HashSet<TileScript>();
 
-        // Dictionary to store the cost of moving from the start node
+        // dictionary to store the cost of moving from the start node
         Dictionary<TileScript, int> gCost = new Dictionary<TileScript, int>();
-        // Dictionary to store the total estimated cost (gCost + hCost)
+        // dictionary to store the total estimated cost. gCost + hCost
         Dictionary<TileScript, int> fCost = new Dictionary<TileScript, int>();
-        // Dictionary to store the parent of each tile (used to reconstruct the path)
+        // dictionary to store the parent of each tile. used to reconstruct the path
         Dictionary<TileScript, TileScript> cameFrom = new Dictionary<TileScript, TileScript>();
 
         TileScript startTile = _hexGrid.GetTileScriptFromIntCords(startCoords);
@@ -34,7 +34,7 @@ public class PathFinding : MonoBehaviour
 
         while (openList.Count > 0)
         {
-            // Get the tile in the open list with the lowest fCost
+            // get the tile in the open list with the lowest fCost
             TileScript currentTile = openList[0];
             foreach (TileScript tile in openList)
             {
@@ -44,13 +44,13 @@ public class PathFinding : MonoBehaviour
                 }
             }
 
-            // If we've reached the target, reconstruct the path
+            // if we've reached the target, reconstruct the path
             if (currentTile == targetTile)
             {
                 //Debug.Log("RAN123123123");
                 path = ReconstructPath(cameFrom, currentTile);
 
-                // Check if targetTile is already in the path; if not, add it at the end
+                // check if targetTile is already in the path. if not add it at the end
                 if (path[path.Count - 1] != targetTile.gameObject)
                 {
                     //Debug.Log("RAN1");
@@ -60,32 +60,32 @@ public class PathFinding : MonoBehaviour
                 return path;
             }
 
-            // Move current tile from open to closed list
+            // move current tile from open to closed list
             openList.Remove(currentTile);
             closedList.Add(currentTile);
 
-            // Loop through each neighbor of the current tile
+            // loop through each neighbor of the current tile
             foreach (GameObject neighborGO in _hexGrid.GetSurroundingTiles(currentTile.gameObject))
             {
                 TileScript neighbor = neighborGO.GetComponent<TileScript>();
 
-                // Skip this neighbor if it's not walkable or it's already in the closed list
+                // skip this neighbor if it's not walkable or it's already in the closed list
                 if (!neighbor.IsWalkable || closedList.Contains(neighbor))
                 {
                     continue;
                 }
 
-                // Calculate the tentative gCost for this neighbor
+                // calculate the tentative gCost for this neighbor
                 int tentativeGCost = gCost[currentTile] + _hexGrid.DistanceBetweenTiles(currentTile.IntCoords, neighbor.IntCoords);
 
-                // If this is a new node or we found a better path, update gCost, fCost and cameFrom
+                // if this is a new node or we found a better path, update gCost, fCost and cameFrom
                 if (!openList.Contains(neighbor) || tentativeGCost < gCost[neighbor])
                 {
                     cameFrom[neighbor] = currentTile;
                     gCost[neighbor] = tentativeGCost;
                     fCost[neighbor] = gCost[neighbor] + _hexGrid.DistanceBetweenTiles(neighbor.IntCoords, targetCoords);
 
-                    // Add this neighbor to the open list if it's not already there
+                    // add this neighbor to the open list if it's not already there
                     if (!openList.Contains(neighbor))
                     {
                     openList.Add(neighbor);
@@ -94,7 +94,7 @@ public class PathFinding : MonoBehaviour
             }
             path = ReconstructPath(cameFrom, currentTile);
 
-            // Check if targetTile is already in the path; if not, add it at the end
+            // check if targetTile is already in the path. if not add it at the end
             if (path[path.Count - 1] != targetTile.gameObject)
             {
                 //Debug.Log("RAN1");
@@ -118,7 +118,7 @@ public class PathFinding : MonoBehaviour
             totalPath.Add(currentTile.gameObject);
         }
 
-        totalPath.Reverse(); // Reverse to get the path from start to goal
+        totalPath.Reverse(); // reverse to get the path from start to goal
 
         return totalPath;
     }

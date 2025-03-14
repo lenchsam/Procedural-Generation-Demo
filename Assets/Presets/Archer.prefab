@@ -138,10 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204fa29153fcea5459c0970faae44031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxMovement: 2
+  MaxMovement: 3
+  TookTurn: 0
   _maxAttackDistance: 2
   _damage: 25
-  TookTurn: 0
   _walkableTiles: []
 --- !u!1001 &489978526769682702
 PrefabInstance:

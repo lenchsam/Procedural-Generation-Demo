@@ -75,34 +75,44 @@ public class HexGrid : MonoBehaviour
         return new Vector2(position.x, position.z);
     }
     public List<GameObject> GetSurroundingTiles(GameObject tileGO){
+
         List<GameObject> connecting = new List<GameObject>();
+
+        //arrays of directions needed to be checked for tiles
+        //need two for checking both odd and even rows
+        Vector2Int[] directionsOdd = {
+            new Vector2Int(0, -1),
+            new Vector2Int(0, +1),
+            new Vector2Int(-1, +1),
+            new Vector2Int(-1, 0),
+            new Vector2Int(+1, +1),
+            new Vector2Int(+1, 0)
+        };
+        Vector2Int[] directionsEven = {
+            new Vector2Int(0, -1),
+            new Vector2Int(0, +1),
+            new Vector2Int(-1, -1),
+            new Vector2Int(-1, 0),
+            new Vector2Int(+1, -1),
+            new Vector2Int(+1, 0)
+        };
         
         Vector2Int tileCords = tileGO.GetComponent<TileScript>().IntCoords;
 
         connecting.Add(GetTileFromIntCords(tileCords));
 
         if(tileCords.x % 2 != 0){//if the tile is on an odd row
-            //check each possible tile surrounding it to see if its there, if it is there add it to the list
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y - 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y - 1)));} //Top
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y + 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y + 1)));} //Bottom
-
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y + 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y + 1)));}//Left Top
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y)));}//Left Bottom
-
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y + 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y + 1)));} //Right Top
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y)));} //Right Bottom  
+            foreach(Vector2 dir in directionsOdd){
+                GameObject tile = GetTileFromIntCords(new Vector2Int((int)(tileCords.x + dir.x), (int)(tileCords.y + dir.y)));
+                if(tile){connecting.Add(tile);} //Top
+            } 
         }else{//if the tile is on an even row
             //check each possible tile surrounding it to see if its there, if it is there add it to the list
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y - 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y - 1)));} //Top
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y + 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x, tileCords.y + 1)));} //Bottom
-
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y - 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y - 1)));} //Left Top
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x - 1, tileCords.y)));} //Left Bottom
-
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y - 1))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y - 1)));} //Right Top
-            if(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y))){connecting.Add(GetTileFromIntCords(new Vector2Int(tileCords.x + 1, tileCords.y)));} //Right Bottom
+            foreach(Vector2 dir in directionsEven){
+                GameObject tile = GetTileFromIntCords(new Vector2Int((int)(tileCords.x + dir.x), (int)(tileCords.y + dir.y)));
+                if(tile){connecting.Add(tile);} //Top
+            } 
         }
-        //Debug.Log(connecting.Count);
 
         return connecting;
     }

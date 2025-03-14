@@ -1265,7 +1265,7 @@ MonoBehaviour:
   SO_Players: []
   SelectedUnit: {fileID: 0}
   HasUnitSelected: 0
-  _startUnit: {fileID: 7490754498245591511, guid: 047a6d85c0b4a44448b62e0378943f81,
+  _startUnit: {fileID: 7490754498245591511, guid: e65db076e066061429645f576b47c698,
     type: 3}
   _playerSO: {fileID: 11400000, guid: 5545720bf46ef964cbb1c2a0f744b52a, type: 2}
 --- !u!4 &946201873

@@ -138,9 +138,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxMovement: 1
+  TookTurn: 0
   _maxAttackDistance: 1
   _damage: 0
-  TookTurn: 0
   _walkableTiles: []
   _controls: {fileID: -944628639613478452, guid: fdc5c586210db7c4384ca3c024383008,
     type: 3}
