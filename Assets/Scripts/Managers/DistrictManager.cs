@@ -30,7 +30,7 @@ public class DistrictManager : MonoBehaviour
         //if the tile the player hit is part of the city
         if(SelectedCitiesScriptableObject == _citiesManager.GetCitySOFromTile(hit.transform.gameObject)){
             tileScript.gameObject.AddComponent<Barracks>();
-            tileScript.OccupiedBy = eOccupiedBy.barracks;
+            tileScript.OccupiedBy = eOccupiedBy.Barracks;
             Instantiate(_barracksPrefab,tileScript.gameObject.transform.position, Quaternion.Euler(0, 90, 0));//instantiate barracks.
             SelectedCitiesScriptableObject.containedDistricts.Add(eDistrict.Barrack);
             //instantiate the barracks GO

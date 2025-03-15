@@ -7,9 +7,12 @@ using UnityEngine.Events;
 
 public class ProceduralGeneration : MonoBehaviour
 {
-
-    //Then i used a flood fill algorithm to assign each tile a biome.
     HexGrid _hexGrid;
+
+    [BoxGroup("Map Settings")]
+    public int _mapWidth;
+    [BoxGroup("Map Settings")]
+    public int _mapHeight;
     FogOfWar _fogOfWar;
     [BoxGroup("Assignables")]
     [SerializeField] GameObject _tilesParent;
@@ -30,26 +33,28 @@ public class ProceduralGeneration : MonoBehaviour
     //perlin noise
 
     [BoxGroup("Noise")]
-    [SerializeField] float noiseScale = 0.1f;
+    [SerializeField] float _noiseScale = 0.1f;
     [BoxGroup("Noise")]
-    [SerializeField] float heightThreshold = 0.5f; // Threshold to decide when it will go to a new layer
+    [SerializeField] float _heightThreshold = 0.5f;
     [BoxGroup("Noise")]
-    [SerializeField] float oceanThreshold = 0.2f; 
-    float lowerLayerHeight = 0;
-    float upperLayerHeight = 0.5f;
+    [SerializeField] float _oceanThreshold = 0.2f; 
+    float _lowerLayerHeight = 0;
+    float _upperLayerHeight = 0.5f;
 
-    Vector2 seedOffset;  // Random offset for noise generation
+    Vector2 seedOffset;
 
     //---------------------------------------------------------------------------------------------------
     [HideInInspector] public UnityEvent OnMapGenerated = new UnityEvent();
     void Awake(){
         seedOffset = new Vector2(UnityEngine.Random.Range(0f, 1000f), UnityEngine.Random.Range(0f, 1000f)); //generates a random seed for procedural generation
     }
-    void Start(){
+    private async void Start()
+    {
         _hexGrid = FindAnyObjectByType<HexGrid>(); 
         _fogOfWar = FindAnyObjectByType<FogOfWar>();
-        Points = poissonDiscSampling(_hexGrid.MapWidth, _hexGrid.MapHeight, PoissonRadius);
+        Points = poissonDiscSampling(_mapWidth, _mapHeight, PoissonRadius);
         Points = randomisePoints(Points);
+        await MakeMapGrid(_mapWidth, _mapHeight, 1);
     }
     //lists
 
@@ -62,7 +67,7 @@ public class ProceduralGeneration : MonoBehaviour
         //then check if its too close to other tiles by using DistanceBetweenTiles function from the HexGrid class
         
         float TileHeight = GetHeightFromPerlinNoise(point.x, point.y);
-        if(getPerlinNoiseHeight(point.x, point.y) < oceanThreshold){
+        if(GetPerlinNoiseHeight(point.x, point.y) < _oceanThreshold){
             return false;
         }
 
@@ -169,7 +174,7 @@ public class ProceduralGeneration : MonoBehaviour
 #endregion
 
 #region Perlin Noise (height and placing map)
-    public async Task MakeMapGrid(int mapWidth, int mapHeight, Dictionary<GameObject, TileScript> Tiles, int tileSize){
+    public async Task MakeMapGrid(int mapWidth, int mapHeight, int tileSize){
         for (int x = 0; x < mapWidth; x++)
         {
             for (int z = 0; z < mapHeight; z++)
@@ -186,15 +191,15 @@ public class ProceduralGeneration : MonoBehaviour
                 eTileType tileType;
 
                 // If the tile is an ocean (at the lower layer), instantiate the ocean prefab
-                if (height == lowerLayerHeight && getPerlinNoiseHeight(x, z) < oceanThreshold) {
+                if (height == _lowerLayerHeight && GetPerlinNoiseHeight(x, z) < _oceanThreshold) {
                     instantiated = Instantiate(_oceanPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
                     tileType = eTileType.Ocean;
-                } else if (height == upperLayerHeight) {//if its the upper layer
+                } else if (height == _upperLayerHeight) {//if its the upper layer
                     instantiated = Instantiate(_grassPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
                     tileType = eTileType.Grass;
 
                     // Instantiate a base object under the upper layer at the lower layer's height
-                    Vector3 basePosition = new Vector3(hexCoords.x, lowerLayerHeight, hexCoords.y);
+                    Vector3 basePosition = new Vector3(hexCoords.x, _lowerLayerHeight, hexCoords.y);
                     //var baseInst = Instantiate(TopBasePrefab, basePosition, Quaternion.Euler(0, 90, 0), TilesParent.transform);
                     //GameObjectUtility.SetStaticEditorFlags(baseInst, StaticEditorFlags.BatchingStatic);
                 }else {//if not ocean, or upper layer, it must be the normal grass layer
@@ -210,7 +215,7 @@ public class ProceduralGeneration : MonoBehaviour
 
                 tileInstScript.Constructor(true, new Vector2Int(x, z), tileType, (eBiomes) biome);
                 
-                Tiles.Add(instantiated, instantiated.GetComponent<TileScript>());
+                _hexGrid.AddToTilesList(instantiated, instantiated.GetComponent<TileScript>());
 
                 if(_fogOfWar.ShowFOW){_fogOfWar.AddFogOfWar(tileInstScript);}
             }
@@ -228,19 +233,19 @@ public class ProceduralGeneration : MonoBehaviour
 
         return new Vector2(xPos, zPos);
     }
-    public float getPerlinNoiseHeight(int x, int z){
-        return Mathf.PerlinNoise((x + seedOffset.x) * noiseScale, (z + seedOffset.y) * noiseScale);
+    public float GetPerlinNoiseHeight(int x, int z){
+        return Mathf.PerlinNoise((x + seedOffset.x) * _noiseScale, (z + seedOffset.y) * _noiseScale);
     }
+    //gets the hight of a specific position from the perlin noise
     public float GetHeightFromPerlinNoise(int x, int z) {
-        float noiseValue = Mathf.PerlinNoise((x + seedOffset.x) * noiseScale, (z + seedOffset.y) * noiseScale);
+        float noiseValue = Mathf.PerlinNoise((x + seedOffset.x) * _noiseScale, (z + seedOffset.y) * _noiseScale);
         
-        // Check for ocean first (if the noise is very low, it becomes an ocean)
-        if (noiseValue < oceanThreshold) {
-            return lowerLayerHeight;
+        if (noiseValue < _oceanThreshold) {
+            return _lowerLayerHeight;
         }
 
         // Use the threshold to decide between two layers
-        return noiseValue > heightThreshold ? upperLayerHeight : lowerLayerHeight;
+        return noiseValue > _heightThreshold ? _upperLayerHeight : _lowerLayerHeight;
     }
 #endregion
 }

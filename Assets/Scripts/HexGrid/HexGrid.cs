@@ -4,27 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 //https://www.redblobgames.com/grids/hexagons USEFUL RESOURCE FOR ALL THINGS HEX GRID
+//TODO: make the position to coords functions take vector3 positions as perameter not vector 2 as this makes them easier to use.
 public class HexGrid : MonoBehaviour
 {
     
     [BoxGroup("Assignables")]
     [SerializeField] GameObject _tilesParent;
-    [BoxGroup("Map Settings")]
-    public int MapWidth;
-    [BoxGroup("Map Settings")]
-    public int MapHeight;
-    [BoxGroup("Map Settings")]
-    int _tileSize = 1; 
     [SerializeField] Dictionary<GameObject, TileScript> _tiles = new Dictionary<GameObject, TileScript>();
-
-    ProceduralGeneration _proceduralGeneration;
-    
-    Vector2 _seedOffset;  // Random offset for noise generation
-
-    private async void Start()
-    {
-        _proceduralGeneration = FindAnyObjectByType<ProceduralGeneration>();
-        await _proceduralGeneration.MakeMapGrid(MapWidth, MapHeight, _tiles, _tileSize);
+    public void AddToTilesList(GameObject gameObjectToAdd, TileScript tileScriptToAdd){
+        _tiles.Add(gameObjectToAdd, tileScriptToAdd);
     }
     public TileScript GetTileScriptFromPosition(Vector2 cords){
         foreach(KeyValuePair<GameObject, TileScript> TS in _tiles){
@@ -144,9 +132,9 @@ public class HexGrid : MonoBehaviour
 }
 public enum eOccupiedBy{
     None,
-    wall,
-    farm,
-    barracks
+    Wall,
+    Farm,
+    Barracks
 }
 public enum eTileType{
     Ocean,

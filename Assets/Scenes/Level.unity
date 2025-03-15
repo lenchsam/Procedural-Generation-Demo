@@ -1798,8 +1798,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilesParent: {fileID: 788511299}
-  MapWidth: 50
-  MapHeight: 50
 --- !u!4 &1379350119
 Transform:
   m_ObjectHideFlags: 0
@@ -1827,6 +1825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190eda872a4c3f843a6479662f831264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mapWidth: 50
+  _mapHeight: 50
   _tilesParent: {fileID: 788511299}
   _biomeMaterials:
   - {fileID: 2100000, guid: 55e6e9d4e1e9701409e76f8921510254, type: 2}
@@ -1839,9 +1839,9 @@ MonoBehaviour:
     type: 3}
   PoissonRadius: 8
   Points: []
-  noiseScale: 0.1
-  heightThreshold: 0.5
-  oceanThreshold: 0.4
+  _noiseScale: 0.1
+  _heightThreshold: 0.5
+  _oceanThreshold: 0.2
   OnMapGenerated:
     m_PersistentCalls:
       m_Calls: []

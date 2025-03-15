@@ -20,7 +20,7 @@ public class Building : MonoBehaviour
         
         TileScript tileScript = hit.transform.gameObject.GetComponent<TileScript>();
         tileScript.OccupiedBuilding = GO;
-        tileScript.OccupiedBy = eOccupiedBy.wall;
+        tileScript.OccupiedBy = eOccupiedBy.Wall;
         tileScript.IsWalkable = false;
     }
     public void rotateBuilding(){
