@@ -57,6 +57,8 @@ The variables that you'll probably want to have fun with are located in the ----
  - Reworked battle system to have more interactive battles when a unit attacks another unit
  - Map saving and loading to a file
 # Contact
+[Portfolio](https://lenchsam.com)
+
 [LinkedIn](https://www.linkedin.com/in/sam-lench-8586b6279/)
 
 [X](https://x.com/SamLenchGameDev)
