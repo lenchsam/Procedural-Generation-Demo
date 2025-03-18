@@ -1,6 +1,6 @@
 # Procedural Generation Demo
 
-Hi! This project shows **Procedural Generation** in **C#** using **Unity**. This readme file will explain all of the features currently implemented, as well as the future for the project as it is still in active development.
+Hi! This project shows **Procedural Generation** in **C#** using **Unity**. This readme file will explain all of the features currently implemented, as well as the future for the project as it is still in active development (although slowly).
 ## Table of Contents
 - [Procedural Generation Demo](#procedural-generation-demo)
   * [About](#about)
