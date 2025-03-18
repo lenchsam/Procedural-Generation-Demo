@@ -15,6 +15,8 @@ public class ProceduralGeneration : MonoBehaviour
     public int _mapHeight;
     FogOfWar _fogOfWar;
     [BoxGroup("Assignables")]
+    [SerializeField] MapScriptableObject _mapScriptableObject;
+    [BoxGroup("Assignables")]
     [SerializeField] GameObject _tilesParent;
     [BoxGroup("Assignables")]
     [SerializeField] Material[] _biomeMaterials;
@@ -26,7 +28,7 @@ public class ProceduralGeneration : MonoBehaviour
     //---------------------------------------------------------------------------------------------------POISSON DISC SAMPLING
     [BoxGroup("Poisson Disc Sampling")]
     [Tooltip("area around the poisson disc sample where another sample cant be placed")]
-    [SerializeField]int PoissonRadius = 10;
+    [SerializeField]int _poissonRadius = 10;
     [HideInInspector] public List<Vector2Int> Points = new List<Vector2Int>();
 
     //---------------------------------------------------------------------------------------------------Perlin Noise
@@ -50,9 +52,18 @@ public class ProceduralGeneration : MonoBehaviour
     }
     private async void Start()
     {
+        //assign map values from scriptbale object
+        _mapHeight = _mapScriptableObject.MapSize.x;
+        _mapWidth = _mapScriptableObject.MapSize.y;
+        _poissonRadius = _mapScriptableObject.PoissonRadius;
+        _noiseScale = _mapScriptableObject.NoiseScale;
+        _heightThreshold = _mapScriptableObject.HeightThreshold;
+        _oceanThreshold = _mapScriptableObject.OceanThreshold;
+
+
         _hexGrid = FindAnyObjectByType<HexGrid>(); 
         _fogOfWar = FindAnyObjectByType<FogOfWar>();
-        Points = poissonDiscSampling(_mapWidth, _mapHeight, PoissonRadius);
+        Points = poissonDiscSampling(_mapWidth, _mapHeight, _poissonRadius);
         Points = randomisePoints(Points);
         await MakeMapGrid(_mapWidth, _mapHeight, 1);
     }

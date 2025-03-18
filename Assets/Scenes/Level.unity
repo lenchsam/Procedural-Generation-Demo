@@ -1827,6 +1827,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapWidth: 50
   _mapHeight: 50
+  _mapScriptableObject: {fileID: 11400000, guid: 61a2d1b8d9d6c3b418f2e17e54f1f446,
+    type: 2}
   _tilesParent: {fileID: 788511299}
   _biomeMaterials:
   - {fileID: 2100000, guid: 55e6e9d4e1e9701409e76f8921510254, type: 2}
@@ -1837,7 +1839,7 @@ MonoBehaviour:
     type: 3}
   _grassPrefab: {fileID: 1507458499070482203, guid: 7fab3dd7e3a172847aef60dc7422a2b9,
     type: 3}
-  PoissonRadius: 8
+  _poissonRadius: 10
   Points: []
   _noiseScale: 0.1
   _heightThreshold: 0.5
@@ -1859,7 +1861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fogOfWarPrefab: {fileID: 7825728450542590104, guid: 6b1f1a2907845974dbe0f80fc5310369,
     type: 3}
-  ShowFOW: 1
+  ShowFOW: 0
 --- !u!1 &1399497292
 GameObject:
   m_ObjectHideFlags: 0
