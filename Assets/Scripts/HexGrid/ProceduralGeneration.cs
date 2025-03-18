@@ -60,13 +60,9 @@ public class ProceduralGeneration : MonoBehaviour
 
 #region Poisson Disc Sampling
     bool isValidPoint(Vector2Int point, List<Vector2Int> points, int minDistance){
-        //gets the tile height
-        //checks if it will be an ocean tile,
-        //if yes, return false
-
-        //then check if its too close to other tiles by using DistanceBetweenTiles function from the HexGrid class
         
-        float TileHeight = GetHeightFromPerlinNoise(point.x, point.y);
+        //makes sure the spawn point isnt an ocean, units cant move on ocean tiles
+        float TileHeight = GetThresholdValue(point.x, point.y);
         if(GetPerlinNoiseHeight(point.x, point.y) < _oceanThreshold){
             return false;
         }
@@ -140,23 +136,11 @@ public class ProceduralGeneration : MonoBehaviour
 
 #region Voronoi
     int Voronoi(Vector2Int tileCords){
-        Vector2Int temp = closestPoint(tileCords);
-        int pointNumber = getPointNumber(temp);
+        Vector2Int closestPointCords = GetClosestPoint(tileCords);
+        int pointNumber = getPointNumber(closestPointCords);
         return pointNumber;
     }
-    int getPointNumber(Vector2Int point){
-        if(point == Points[0]){
-            return 0;
-        }else if(point == Points[1]){
-            return 1;
-        }else if(point == Points[2]){
-            return 2;
-        }else {
-            return 3;
-        }
-        
-    }
-    Vector2Int closestPoint(Vector2Int nextPoint){
+    Vector2Int GetClosestPoint(Vector2Int nextPoint){
         int closestDistance = 999999999; //just a big number so it triggers the if statement below
         Vector2Int closestPoint = new Vector2Int(0, 0);
 
@@ -170,7 +154,19 @@ public class ProceduralGeneration : MonoBehaviour
         }
         return closestPoint;
     }
-
+    
+    int getPointNumber(Vector2Int point){
+        if(point == Points[0]){
+            return 0;
+        }else if(point == Points[1]){
+            return 1;
+        }else if(point == Points[2]){
+            return 2;
+        }else {
+            return 3;
+        }
+        
+    }
 #endregion
 
 #region Perlin Noise (height and placing map)
@@ -181,10 +177,9 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 await Task.Yield();
 
-                int biome = Voronoi(new Vector2Int(x, z));//get the biome number
                 //calculate height from perlin noise
                 Vector2 hexCoords = GetHexCoords(x, z, tileSize);
-                float height = GetHeightFromPerlinNoise(x, z);
+                float height = GetThresholdValue(x, z);
                 Vector3 position = new Vector3(hexCoords.x, height, hexCoords.y);
 
                 GameObject instantiated;
@@ -208,6 +203,8 @@ public class ProceduralGeneration : MonoBehaviour
                     //potentialCoastTiles.Add(instantiated);
                 }
                 GameObjectUtility.SetStaticEditorFlags(instantiated, StaticEditorFlags.BatchingStatic);
+                
+                int biome = Voronoi(new Vector2Int(x, z));//get the biome number
 
                 instantiated.GetComponent<MeshRenderer> ().material = _biomeMaterials[biome];
 
@@ -233,18 +230,20 @@ public class ProceduralGeneration : MonoBehaviour
 
         return new Vector2(xPos, zPos);
     }
-    public float GetPerlinNoiseHeight(int x, int z){
+    //gets the float value from the perlin noise map for a specific point
+    private float GetPerlinNoiseHeight(int x, int z){
         return Mathf.PerlinNoise((x + seedOffset.x) * _noiseScale, (z + seedOffset.y) * _noiseScale);
     }
-    //gets the hight of a specific position from the perlin noise
-    public float GetHeightFromPerlinNoise(int x, int z) {
-        float noiseValue = Mathf.PerlinNoise((x + seedOffset.x) * _noiseScale, (z + seedOffset.y) * _noiseScale);
+
+    //gets the hight for a tile to be placed
+    private float GetThresholdValue(int x, int z) {
+        float noiseValue = GetPerlinNoiseHeight(x, z);
         
         if (noiseValue < _oceanThreshold) {
             return _lowerLayerHeight;
         }
 
-        // Use the threshold to decide between two layers
+        //use the threshold to decide between two layers
         return noiseValue > _heightThreshold ? _upperLayerHeight : _lowerLayerHeight;
     }
 #endregion

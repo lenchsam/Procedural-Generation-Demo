@@ -7,10 +7,8 @@ public class Building : MonoBehaviour
 {
     [SerializeField] GameObject _objectToInstantiate;
     [SerializeField] bool _isBuilding = false;
-    private HexSnap _hexSnap;
     private PlayerController _playerController;
     void Start(){
-        _hexSnap = FindAnyObjectByType<HexSnap>();
         _playerController = FindAnyObjectByType<PlayerController>();
     }
     public void PlaceDown(RaycastHit hit){
