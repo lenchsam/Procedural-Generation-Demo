@@ -49,7 +49,7 @@ The variables that you'll probably want to have fun with are located in the ----
  - make sure to also lower poisson-disc radius when making map size smaller in editor. If this isn't done, it may freeze the editor.
 
 ## Potential Future Features
- - Districts
+ - Functioning Districts
  - Resource farming
  - System to buy/make units, districts and potentially more
  - UI
