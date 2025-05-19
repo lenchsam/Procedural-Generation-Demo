@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 //https://www.redblobgames.com/grids/hexagons USEFUL RESOURCE FOR ALL THINGS HEX GRID
-//TODO: make the position to coords functions take vector3 positions as perameter not vector 2 as this makes them easier to use.
 public class HexGrid : MonoBehaviour
 {
     
@@ -14,9 +13,11 @@ public class HexGrid : MonoBehaviour
     public void AddToTilesList(GameObject gameObjectToAdd, TileScript tileScriptToAdd){
         _tiles.Add(gameObjectToAdd, tileScriptToAdd);
     }
-    public TileScript GetTileScriptFromPosition(Vector2 cords){
+    public TileScript GetTileScriptFromPosition(Vector3 pos){
         foreach(KeyValuePair<GameObject, TileScript> TS in _tiles){
-            if(new Vector2(TS.Key.transform.position.x, TS.Key.transform.position.z) == cords){
+            //need to ignore Y axis as we are compairing units with tiles a lot of the time which have different y levels
+            if ((TS.Key.transform.position.x == pos.x) && (TS.Key.transform.position.z == pos.z))
+            {
                 return TS.Value;
             }
         }
@@ -30,21 +31,23 @@ public class HexGrid : MonoBehaviour
         }
         return null;
     }
-    public void BlockTile(Vector2 coords){
-        var tileScript = GetTileScriptFromPosition(coords);
+    public void BlockTile(Vector3 pos){
+        var tileScript = GetTileScriptFromPosition(pos);
         tileScript.IsWalkable = false;
     }
-    public void UnblockTile(Vector2 coords){
-        var tileScript = GetTileScriptFromPosition(coords);
+    public void UnblockTile(Vector3 pos){
+        var tileScript = GetTileScriptFromPosition(pos);
         tileScript.IsWalkable = true;
     }
-    public GameObject GetTileFromPosition(Vector2 cords){
+    public GameObject GetTileFromPosition(Vector3 pos){
         foreach(KeyValuePair<GameObject, TileScript> TS in _tiles){
-            if(new Vector2(TS.Key.transform.position.x, TS.Key.transform.position.z) == cords){
+            //need to ignore Y axis as we are compairing units with tiles a lot of the time which have different y levels
+            if ((TS.Key.transform.position.x == pos.x) && (TS.Key.transform.position.z == pos.z))
+            {
                 return TS.Key;
             }
         }
-        return null;;
+        return null;
     }
     public GameObject GetTileFromIntCords(Vector2Int cords) {
         foreach(KeyValuePair<GameObject, TileScript> TS in _tiles){
@@ -54,9 +57,8 @@ public class HexGrid : MonoBehaviour
         }
         return null;
     }
-    public Vector2 GetCoordinatesFromPosition(Vector3 position){
-        //Debug.Log(new Vector2(position.x, position.z));
-        return new Vector2(position.x, position.z);
+    public Vector2 GetCoordinatesFromPosition(Vector3 pos){
+        return new Vector2(pos.x, pos.z);
     }
     public List<GameObject> GetSurroundingTiles(GameObject tileGO){
 
@@ -123,7 +125,7 @@ public class HexGrid : MonoBehaviour
 
         return new Vector3Int(x, y, z);
     }
-    public Vector2Int GetIntCordsFromPosition(Vector2 pos){
+    public Vector2Int GetIntCordsFromPosition(Vector3 pos){
         TileScript TS = GetTileScriptFromPosition(pos);
         return TS.IntCoords;
     }

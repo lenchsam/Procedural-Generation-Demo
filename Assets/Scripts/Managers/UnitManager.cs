@@ -33,12 +33,12 @@ public class UnitManager : MonoBehaviour
     }
     public void unitController(RaycastHit hit){
         if (hit.transform.tag == "Tile" && HasUnitSelected){ //if hit a tile and already have a unit selected
-            Vector2 targetCords = new Vector2(hit.transform.GetComponent<TileScript>().transform.position.x, hit.transform.GetComponent<TileScript>().transform.position.z);
-            Vector2 startCords = new Vector2(SelectedUnit.position.x, SelectedUnit.position.z);
+            Vector3 targetPos = hit.transform.GetComponent<TileScript>().transform.position;
+            Vector3 startPos = SelectedUnit.position;
             //get the path to the target position
-            Vector2Int startCoords = _hexGrid.GetIntCordsFromPosition(startCords);
+            Vector2Int startCoords = _hexGrid.GetIntCordsFromPosition(startPos);
             //Debug.Log(startCoords + " start Cords");
-            Vector2Int targetCoords = _hexGrid.GetIntCordsFromPosition(targetCords);
+            Vector2Int targetCoords = _hexGrid.GetIntCordsFromPosition(targetPos);
             //Debug.Log(targetCoords + " target Cords");
             List<GameObject> path;// = pathFinding.FindPath(startCoords, targetCoords);
             //pass the tile node the reference to the unit that is stood on it
@@ -88,11 +88,11 @@ public class UnitManager : MonoBehaviour
                 targetNode.OccupiedUnit = SelectedUnit.gameObject; 
                 SelectedUnit.GetComponent<Units>().TookTurn = true;
                 
-                _hexGrid.BlockTile(targetCords);//set the tile that the unit will travel to as none walkable
-                _hexGrid.UnblockTile(startCords);//sets the current tile as walkable
+                _hexGrid.BlockTile(targetPos);//set the tile that the unit will travel to as none walkable
+                _hexGrid.UnblockTile(startPos);//sets the current tile as walkable
 
                 //reseting variables
-                TileScript startNode = _hexGrid.GetTileScriptFromPosition(startCords);
+                TileScript startNode = _hexGrid.GetTileScriptFromPosition(startPos);
                 startNode.OccupiedUnit = null;
                 SelectedUnit = null;
                 HasUnitSelected = false;
@@ -206,10 +206,8 @@ public class UnitManager : MonoBehaviour
     public List<GameObject> GetAllWalkableTiles(Vector3 pos, int maxMovementDistance){
         
         List<GameObject> walkable = new List<GameObject>(); //list for all tiles the unit will be able to walk on
-        GameObject homeTile = _hexGrid.GetTileFromPosition(new Vector2(pos.x, pos.z)); //get the tile gameobject
-        //Debug.Log(homeTile);
-        TileScript homeTileScript = homeTile.GetComponent<TileScript>();
-        //Debug.Log(homeTileScript);
+        GameObject homeTile = _hexGrid.GetTileFromPosition(pos); //get the tile gameobject
+        TileScript homeTileScript = _hexGrid.GetTileScriptFromPosition(pos);
 
         Queue<GameObject> analysingQueue = new Queue<GameObject>();//queue list for all tiles that need to be analysed
 
