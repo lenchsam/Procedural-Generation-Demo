@@ -83,8 +83,6 @@ public class HexGrid : MonoBehaviour
         
         Vector2Int tileCords = tileGO.GetComponent<TileScript>().IntCoords;
 
-        connecting.Add(GetTileFromIntCords(tileCords));
-
         if(tileCords.x % 2 != 0){//if the tile is on an odd row
             foreach(Vector2 dir in directionsOdd){
                 GameObject tile = GetTileFromIntCords(new Vector2Int((int)(tileCords.x + dir.x), (int)(tileCords.y + dir.y)));
