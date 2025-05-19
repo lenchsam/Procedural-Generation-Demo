@@ -23,18 +23,20 @@ This project utilises a variety of different procedural generation techniques to
 
 ## Features
 
- - Poisson Disc Sampling used to get the spawn locations of players
+ - Poisson disc sampling used to get the spawn locations of players
  - Voronoi noise used for biomes
- - Perlin Noise to create height layers
+ - Perlin noise to create height layers
  - Fog of War
  - Turn-based combat
+ - A* pathfinding
+ - Different map sizes
 
 ## Getting Started
 Note that I used paid assets for the models and other paid plugins while creating this project, these are not found in this github. 
 ### Requirements
 
  - Unity version 6000.0.23f1
- - Visual Studio Code (or your preferred IDE)
+ - Visual Studio Code (or your preferred)
 
 ### Setup
  1. Clone the repository. 
