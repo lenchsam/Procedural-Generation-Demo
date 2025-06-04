@@ -213,7 +213,7 @@ public class ProceduralGeneration : MonoBehaviour
                     tileType = eTileType.Grass;
                     //potentialCoastTiles.Add(instantiated);
                 }
-                GameObjectUtility.SetStaticEditorFlags(instantiated, StaticEditorFlags.BatchingStatic);
+                //GameObjectUtility.SetStaticEditorFlags(instantiated, StaticEditorFlags.BatchingStatic);
                 
                 int biome = Voronoi(new Vector2Int(x, z));//get the biome number
 

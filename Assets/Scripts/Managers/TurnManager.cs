@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering.VirtualTexturing;
 
 public class TurnManager : MonoBehaviour
 {
