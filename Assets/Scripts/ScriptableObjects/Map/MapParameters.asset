@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 699a97bff7eef1642b97aa4de9fed6f4, type: 3}
   m_Name: MapParameters
   m_EditorClassIdentifier: 
-  MapSize: {x: 20, y: 20}
+  MapSize: {x: 30, y: 30}
   PoissonRadius: 4
   NoiseScale: 0.1
   HeightThreshold: 0.5
