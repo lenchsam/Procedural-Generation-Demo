@@ -7,4 +7,9 @@ public class UIScreipts : MonoBehaviour
         GameObject sceneManager = GameObject.Find("----SceneManager----");
         sceneManager.GetComponent<SceneManager>().LoadScene(sceneName);
     }
+    public void quitGame()
+    {
+        GameObject sceneManager = GameObject.Find("----SceneManager----");
+        sceneManager.GetComponent<SceneManager>().QuitGame();
+    }
 }
