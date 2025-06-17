@@ -130,12 +130,6 @@ public class HexGrid : MonoBehaviour
         return TS.IntCoords;
     }
 }
-public enum eOccupiedBy{
-    None,
-    Wall,
-    Farm,
-    Barracks
-}
 public enum eTileType{
     Ocean,
     Grass,

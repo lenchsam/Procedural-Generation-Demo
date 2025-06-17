@@ -1,111 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public GameObject TileUI;
-    [HideInInspector] public UnityEvent<Vector2, GameObject> OnUnitMove = new UnityEvent<Vector2, GameObject>();
-    int _LM;
-    private UnitManager _unitManager;
-    private DistrictManager _districtManager;
-    private Building _building;
+    public TurnManager TurnManager;
+    public UnitManager UnitManager;
 
-    public GameObject SelectedTile;
+    private IState _currentState;
 
-    bool _pointerOverUI = false;
+    private int _tileLayerMask;
 
-    //private variables
-    private HexGrid _hexGrid;
+    void Awake()
+    {
+        _tileLayerMask = LayerMask.GetMask("Tile");
+
+    }
     void Start()
     {
-        _unitManager = FindAnyObjectByType<UnitManager>();
-        _hexGrid = FindAnyObjectByType<HexGrid>();
-        _districtManager = FindAnyObjectByType<DistrictManager>();
-        _building = FindAnyObjectByType<Building>();
-
-        _LM = LayerMask.GetMask("Tile");
+        ChangeState(new DefaultState(this));
     }
 
-    void Update()
+    public void ChangeState(IState newState)
     {
-        _pointerOverUI = EventSystem.current.IsPointerOverGameObject();
+        if (_currentState != null)
+        {
+            _currentState.Exit();
+        }
+
+        _currentState = newState;
+        _currentState.Enter();
+
+        Debug.Log($"PlayerController changed state to: {_currentState.GetType().Name}");
     }
-    public void Clicked(InputAction.CallbackContext context){
-        if (!context.performed){return;}
-        
-        //--------------------------------------------------------------------------------------------------
-        //CHECKING IF PLAYER CLICKED UI
 
-        // Initialize PointerEventData with current mouse position
-        if(_pointerOverUI){
-            //Debug.Log("ponter is over UI");
-            return;
-        }
+    public void OnClick(InputAction.CallbackContext context)
+    {
+        //only want the first moment its clicked
+        if (!context.performed) { return; }
 
-        //--------------------------------------------------------------------------------------------------
-        //raycast
-
-        TileUI.SetActive(false);
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        bool hasHit = Physics.Raycast(ray, out hit, Mathf.Infinity, _LM);
-        
-
-        if(!hasHit){return;} //return if its hit nothing
-
-        //handles the movement if the tile is hidden
-        // if(hit.transform.gameObject.GetComponent<TileScript>().isFog){
-        //     unitManager.unitController(hit);
-        //     return;
-        // }
-        
-        SelectedTile = hit.transform.gameObject;
-        TileUI.SetActive(true);
-
-        //if tile has a unit on it, select that unit.
-        if(SelectedTile.GetComponent<TileScript>().OccupiedUnit != null){
-            _unitManager.SelectUnit();
-        }
-
-        //--------------------------------------------------------------------------------------------------
-        //if waiting for placing barracks placement
-
-        if(_districtManager.WaitingForClick){
-            _districtManager.BuildBarracks(hit);
-            _districtManager.WaitingForClick = false;
-            return;
-        }
-        
-        //assigns the correct scriptable object for the district manager. used for checking placing defences in the correct city
-        var tileScript = hit.transform.gameObject.GetComponent<TileScript>();
-        if(tileScript.Districts == eDistrict.CityCentre){
-            _districtManager.SelectedCitiesScriptableObject = tileScript.SO_Cities;
-        }else{
-            _districtManager.SelectedCitiesScriptableObject = null;
-        }
-
-        //--------------------------------------------------------------------------------------------------
-        var interactable = hit.transform.gameObject.GetComponent<IInteractable>();
-        if(interactable != null){ //if the hit object is clickable
-            interactable.OnClick();
-        }
-
-        if(_unitManager.SelectedUnit != null && !_unitManager.SelectedUnit.GetComponent<Units>().TookTurn){
-            _unitManager.unitController(hit);
-        }
-        //building.PlaceDown(hit);
-        //cityCheck(hasHit, hit);
-    }
-    
-    private void cityCheck(bool hasHit, RaycastHit hit){
-        if(hit.transform.tag != "Tile"){return;}
-
-        if(hit.transform.gameObject.GetComponent<TileScript>().IsCityCentre == true){
-            Debug.Log("trueeeeee");
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _tileLayerMask))
+        {
+            TileScript clickedTile = hit.collider.GetComponent<TileScript>();
+            if (clickedTile != null)
+            {
+                _currentState.OnTileClicked(clickedTile);
+            }
         }
     }
 }
