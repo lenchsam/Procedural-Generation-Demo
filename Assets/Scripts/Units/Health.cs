@@ -8,7 +8,7 @@ public class Health : MonoBehaviour, IDamageable
     void Awake(){
         _health = _maxHealth;
     }
-    public void takeDamage(int damageToTake)
+    public void TakeDamage(int damageToTake)
     {
         _health -= damageToTake;
 

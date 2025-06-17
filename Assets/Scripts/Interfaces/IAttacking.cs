@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAttacking
 {
-    void attack(GameObject thingToAttack);
+    void Attack(Unit thingToAttack);
 }

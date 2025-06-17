@@ -24,6 +24,7 @@ public class UnitManager : MonoBehaviour
         {
             //dont need to check team as its checked before this function is called (UnitSelectedState line 30)
             Debug.Log("unit attacking");
+            selectedUnitComponent.Attack(tile.OccupiedUnit.GetComponent<Unit>());
         }
         else
         {
