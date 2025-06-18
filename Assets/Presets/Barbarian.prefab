@@ -2422,6 +2422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 0
+  DamageRange: 1
+  _movementPoints: 1
 --- !u!114 &410610885724523690
 MonoBehaviour:
   m_ObjectHideFlags: 0

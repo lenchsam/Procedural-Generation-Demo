@@ -20,4 +20,14 @@ public class TileScript : MonoBehaviour
             IsWalkable = false;
         }
     }
+
+    public void Highlight()
+    {
+        GetComponent<Renderer>().material.color = Color.red;
+    }
+
+    public void Unhighlight()
+    {
+        GetComponent<Renderer>().material.color = Color.white;
+    }
 }

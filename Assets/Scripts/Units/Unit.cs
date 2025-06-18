@@ -5,7 +5,7 @@ public class Unit : MonoBehaviour, IAttacking
     public e_Team Team;
     public int DamageRange = 1;
     private int _damage = 50;
-    private int _movementPoints = 1;
+    [SerializeField] private int _movementPoints = 1;
 
     private HexGrid _hexGrid;
 

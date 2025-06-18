@@ -16,14 +16,15 @@ public class UnitSelectedState : IState
 
     public void Enter()
     {
-        //TODO: display movement range here, use GetReachableTiles function from pathfinding
         TileScript tileScript = _playerController.HexGrid.GetTileScriptFromPosition(_selectedUnitComponent.transform.position);
         _validMoves = _playerController.PathFinding.GetReachableTiles(tileScript.IntCoords, _selectedUnitComponent.GetMovementPoints());
+
+        ToggleMoveHighlights(true);
     }
 
     public void Exit()
     {
-        //TODO: hide movement range here
+        ToggleMoveHighlights(false);
     }
 
     public void OnTileClicked(TileScript tile)
@@ -37,7 +38,8 @@ public class UnitSelectedState : IState
         }
 
         //check if they select a different unit
-        if (tile.OccupiedUnit != null) { 
+        if (tile.OccupiedUnit != null)
+        {
             Unit unitComponent = tile.OccupiedUnit.GetComponent<Unit>();
 
             //if its same team as us
@@ -54,5 +56,21 @@ public class UnitSelectedState : IState
 
         _playerController.ChangeState(new DefaultState(_playerController));
 
+    }
+
+    void ToggleMoveHighlights(bool enable)
+    {
+        foreach (TileScript tile in _validMoves)
+        {
+            // Assuming TileScript has a method to highlight the tile
+            if (enable)
+            {
+                tile.Highlight();
+            }
+            else
+            {
+                tile.Unhighlight();
+            }
+        }
     }
 }
