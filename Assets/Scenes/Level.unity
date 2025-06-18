@@ -395,6 +395,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurnManager: {fileID: 2051482863}
   UnitManager: {fileID: 946201872}
+  PathFinding: {fileID: 1379350121}
+  HexGrid: {fileID: 1379350118}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,9 +1122,10 @@ MonoBehaviour:
     type: 3}
   _poissonRadius: 10
   Points: []
-  _noiseScale: 0.1
+  _noiseScale: 0.9
   _heightThreshold: 0.5
-  _oceanThreshold: 0.2
+  _topHeightThreshold: 0.53
+  _oceanThreshold: 0.4
   OnMapGenerated:
     m_PersistentCalls:
       m_Calls: []

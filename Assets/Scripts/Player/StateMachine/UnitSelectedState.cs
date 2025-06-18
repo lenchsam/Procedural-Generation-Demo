@@ -1,9 +1,13 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitSelectedState : IState
 {
     PlayerController _playerController;
     Unit _selectedUnitComponent;
+
+    private List<TileScript> _validMoves;
     public UnitSelectedState(PlayerController playerController, Unit selectedUnit)
     {
         _playerController = playerController;
@@ -12,7 +16,9 @@ public class UnitSelectedState : IState
 
     public void Enter()
     {
-        //TODO: display 
+        //TODO: display movement range here, use GetReachableTiles function from pathfinding
+        TileScript tileScript = _playerController.HexGrid.GetTileScriptFromPosition(_selectedUnitComponent.transform.position);
+        _validMoves = _playerController.PathFinding.GetReachableTiles(tileScript.IntCoords, _selectedUnitComponent.GetMovementPoints());
     }
 
     public void Exit()
@@ -22,6 +28,14 @@ public class UnitSelectedState : IState
 
     public void OnTileClicked(TileScript tile)
     {
+        // if tile is not in range return to DefaultState as cannot move or attack there
+        if (!_validMoves.Contains(tile))
+        {
+            Debug.Log("tile too far away");
+            _playerController.ChangeState(new DefaultState(_playerController));
+            return;
+        }
+
         //check if they select a different unit
         if (tile.OccupiedUnit != null) { 
             Unit unitComponent = tile.OccupiedUnit.GetComponent<Unit>();
@@ -29,7 +43,7 @@ public class UnitSelectedState : IState
             //if its same team as us
             if (unitComponent.Team == _playerController.TurnManager.GetCurrentPlayer())
             {
-                // If it's our unit, change to the UnitSelectedState.
+                //if it's our unit, change to the UnitSelectedState
                 _playerController.ChangeState(new UnitSelectedState(_playerController, unitComponent));
                 return;
             }

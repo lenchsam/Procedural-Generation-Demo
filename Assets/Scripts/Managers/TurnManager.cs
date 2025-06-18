@@ -31,7 +31,7 @@ public class TurnManager : MonoBehaviour
             Vector3 initialCamPos = new Vector3(
                 _hexGrid.GetTileFromIntCords(startPositions[i]).transform.position.x,
                 _cameraTransform.position.y,
-                _hexGrid.GetTileFromIntCords(startPositions[i]).transform.position.z - 15
+                _hexGrid.GetTileFromIntCords(startPositions[i]).transform.position.z
             );
 
             _players.Add(new PlayerData(team, initialCamPos));

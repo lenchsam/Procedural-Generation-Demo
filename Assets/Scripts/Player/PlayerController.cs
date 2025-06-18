@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     public TurnManager TurnManager;
     public UnitManager UnitManager;
+    public PathFinding PathFinding;
+    public HexGrid HexGrid;
 
     private IState _currentState;
 

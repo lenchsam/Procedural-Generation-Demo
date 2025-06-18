@@ -16,4 +16,4 @@ MonoBehaviour:
   PoissonRadius: 4
   NoiseScale: 0.1
   HeightThreshold: 0.5
-  OceanThreshold: 0.2
+  OceanThreshold: 0.35

@@ -39,9 +39,12 @@ public class ProceduralGeneration : MonoBehaviour
     [BoxGroup("Noise")]
     [SerializeField] float _heightThreshold = 0.5f;
     [BoxGroup("Noise")]
+    [SerializeField] float _topHeightThreshold = 0.75f;
+    [BoxGroup("Noise")]
     [SerializeField] float _oceanThreshold = 0.2f; 
     float _lowerLayerHeight = 0;
-    float _upperLayerHeight = 0.5f;
+    float _upperLayerHeight = 0.25f;
+    float _topLaterHeight = 0.5f;
 
     Vector2 seedOffset;
 
@@ -200,18 +203,22 @@ public class ProceduralGeneration : MonoBehaviour
                 if (height == _lowerLayerHeight && GetPerlinNoiseHeight(x, z) < _oceanThreshold) {
                     instantiated = Instantiate(_oceanPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
                     tileType = eTileType.Ocean;
-                } else if (height == _upperLayerHeight) {//if its the upper layer
+                } else if (height == _upperLayerHeight && height < _topHeightThreshold) {//if its the upper layer
                     instantiated = Instantiate(_grassPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
                     tileType = eTileType.Grass;
 
                     // Instantiate a base object under the upper layer at the lower layer's height
-                    Vector3 basePosition = new Vector3(hexCoords.x, _lowerLayerHeight, hexCoords.y);
+                    //Vector3 basePosition = new Vector3(hexCoords.x, _lowerLayerHeight, hexCoords.y);
                     //var baseInst = Instantiate(TopBasePrefab, basePosition, Quaternion.Euler(0, 90, 0), TilesParent.transform);
                     //GameObjectUtility.SetStaticEditorFlags(baseInst, StaticEditorFlags.BatchingStatic);
-                }else {//if not ocean, or upper layer, it must be the normal grass layer
+                }else if(height == _topHeightThreshold)
+                {
                     instantiated = Instantiate(_grassPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
                     tileType = eTileType.Grass;
-                    //potentialCoastTiles.Add(instantiated);
+                }
+                else {//if not ocean, or upper layers, it must be the normal grass layer
+                    instantiated = Instantiate(_grassPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
+                    tileType = eTileType.Grass;
                 }
                 GameObjectUtility.SetStaticEditorFlags(instantiated, StaticEditorFlags.BatchingStatic);
                 
@@ -254,8 +261,18 @@ public class ProceduralGeneration : MonoBehaviour
             return _lowerLayerHeight;
         }
 
-        //use the threshold to decide between two layers
-        return noiseValue > _heightThreshold ? _upperLayerHeight : _lowerLayerHeight;
+        if (noiseValue > _topHeightThreshold)
+        {
+            return _topLaterHeight;
+        }
+        else if (noiseValue > _heightThreshold)
+        {
+            return _upperLayerHeight;
+        }
+        else
+        {
+            return _lowerLayerHeight;
+        }
     }
 #endregion
 }

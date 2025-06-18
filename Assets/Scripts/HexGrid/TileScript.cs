@@ -9,6 +9,7 @@ public class TileScript : MonoBehaviour
     public GameObject OccupiedUnit;
     public eTileType TileType;
     public eBiomes Biome;
+    public int MovementCost = 1;
 
     public void Constructor(bool isWalkable, Vector2Int intCords, eTileType tileType, eBiomes biome){
         IsWalkable = isWalkable;
