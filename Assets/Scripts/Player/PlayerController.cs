@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
+
 public class PlayerController : MonoBehaviour
 {
     public TurnManager TurnManager;
@@ -10,6 +12,11 @@ public class PlayerController : MonoBehaviour
     private IState _currentState;
 
     private int _tileLayerMask;
+
+    [HideInInspector] public UnityEvent<Unit> OnUnitSelected = new UnityEvent<Unit>();
+    [HideInInspector] public UnityEvent<Vector2Int> OnCityFounded = new UnityEvent<Vector2Int>();
+
+
 
     void Awake()
     {
@@ -31,7 +38,7 @@ public class PlayerController : MonoBehaviour
         _currentState = newState;
         _currentState.Enter();
 
-        Debug.Log($"PlayerController changed state to: {_currentState.GetType().Name}");
+        //Debug.Log($"PlayerController changed state to: {_currentState.GetType().Name}");
     }
 
     public void OnClick(InputAction.CallbackContext context)
@@ -48,5 +55,14 @@ public class PlayerController : MonoBehaviour
                 _currentState.OnTileClicked(clickedTile);
             }
         }
+    }
+
+    public void NotifyUnitSelected(Unit selectedUnitComponent)
+    {
+        OnUnitSelected.Invoke(selectedUnitComponent);
+    }
+    public void NotifyCityFounded(Vector2Int foundingPosition)
+    {
+        OnCityFounded.Invoke(foundingPosition);
     }
 }

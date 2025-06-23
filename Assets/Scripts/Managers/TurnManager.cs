@@ -57,6 +57,9 @@ public class TurnManager : MonoBehaviour
 
         ChangeCamera(nextPlayer.SavedCameraPosition);
 
+        PlayerController playerController = FindFirstObjectByType<PlayerController>();
+        playerController.ChangeState(new DefaultState(playerController));
+
         OnTurnEnd.Invoke();
     }
 

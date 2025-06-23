@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +22,6 @@ public class UnitManager : MonoBehaviour
         if (tile.OccupiedUnit != null)
         {
             //dont need to check team as its checked before this function is called (UnitSelectedState line 30)
-            Debug.Log("unit attacking");
             selectedUnitComponent.Attack(tile.OccupiedUnit.GetComponent<Unit>());
         }
         else
@@ -50,7 +48,6 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator lerpToPosition(Vector3 startPosition, List<GameObject> targetPositions, float unitMovementSpeed, GameObject gameObjectToMove)
     {
-        Debug.Log("moving unit");
         foreach (GameObject targetPosition in targetPositions)
         {
             Vector3 adjustedTarget = new Vector3(targetPosition.transform.position.x, targetPosition.transform.position.y, targetPosition.transform.position.z);

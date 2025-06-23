@@ -156,7 +156,7 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -180,7 +180,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 30
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -206,13 +206,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3826835, y: -0.000000027533755, z: 0.000000011404856, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 5, z: -5}
+  m_LocalRotation: {x: 0.345387, y: 0.000000020457636, z: -0.000000007529143, w: 0.93846035}
+  m_LocalPosition: {x: 0, y: 10, z: -12.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 13.999, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +397,12 @@ MonoBehaviour:
   UnitManager: {fileID: 946201872}
   PathFinding: {fileID: 1379350121}
   HexGrid: {fileID: 1379350118}
+  OnUnitSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCityFounded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,13 +693,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893672762}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3826835, y: -0.00000002753376, z: 0.00000001140486, w: 0.9238795}
-  m_LocalPosition: {x: 0, y: 5, z: -5}
+  m_LocalRotation: {x: 0.345387, y: 0.000000020457634, z: -0.000000007529143, w: 0.93846035}
+  m_LocalPosition: {x: 0, y: 10, z: -12.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!114 &893672765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,7 +747,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 0, y: 0, z: 0}
     QuaternionDamping: 0
-  FollowOffset: {x: 0, y: 5, z: -5}
+  FollowOffset: {x: 0, y: 11, z: -12.92}
 --- !u!114 &893672767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,7 +772,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 1484089483}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 30
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -865,6 +871,7 @@ MonoBehaviour:
   _turnManager: {fileID: 2051482863}
   _startUnitPrefab: {fileID: 8018593637340118393, guid: efc4f26f13528ff4db68f507fb4fa0e5,
     type: 3}
+  _playerController: {fileID: 410028283}
 --- !u!4 &1018439935
 Transform:
   m_ObjectHideFlags: 0
@@ -1270,7 +1277,7 @@ Transform:
   m_GameObject: {fileID: 1484089482}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

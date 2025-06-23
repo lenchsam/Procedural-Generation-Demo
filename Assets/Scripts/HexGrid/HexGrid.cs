@@ -108,7 +108,6 @@ public class HexGrid : MonoBehaviour
         // Calculate distance using cube coordinates
         int distance = (Mathf.Abs(startCube.x - targetCube.x) + Mathf.Abs(startCube.y - targetCube.y) + Mathf.Abs(startCube.z - targetCube.z)) / 2;
 
-        //Debug.Log(distance + " THIS IS THE DISTANCE");
 
         return distance;
     }

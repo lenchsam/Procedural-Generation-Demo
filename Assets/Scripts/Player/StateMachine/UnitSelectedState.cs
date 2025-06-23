@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitSelectedState : IState
@@ -55,7 +54,6 @@ public class UnitSelectedState : IState
         _playerController.UnitManager.HandleUnitCommand(_selectedUnitComponent, tile);
 
         _playerController.ChangeState(new DefaultState(_playerController));
-
     }
 
     void ToggleMoveHighlights(bool enable)

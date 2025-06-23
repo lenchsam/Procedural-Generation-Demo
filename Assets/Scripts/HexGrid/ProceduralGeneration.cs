@@ -232,13 +232,9 @@ public class ProceduralGeneration : MonoBehaviour
                 
                 _hexGrid.AddToTilesList(instantiated, instantiated.GetComponent<TileScript>());
 
-                //if(_fogOfWar.ShowFOW){_fogOfWar.AddFogOfWar(tileInstScript);}
             }
         }
-        //ConvertGrassToCoastTiles();
-        // Fire the UnityEvent once the map is generated
         OnMapGenerated?.Invoke();
-        //Debug.Log("RANANNANS");
         StaticBatchingUtility.Combine(_tilesParent);//enables static batching for optimisation
         return;
     }
