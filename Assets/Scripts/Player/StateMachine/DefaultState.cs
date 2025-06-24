@@ -10,7 +10,7 @@ public class DefaultState : IState
     }
     public void Enter()
     {
-        
+        _playerController.UIManager.DisableUnitUI();
     }
 
     public void Exit()

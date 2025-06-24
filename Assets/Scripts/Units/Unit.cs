@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour, IAttacking
 {
+    public e_UnitType UnitType;
     public e_Team Team;
     public int DamageRange = 1;
     private int _damage = 50;
@@ -9,6 +10,12 @@ public class Unit : MonoBehaviour, IAttacking
 
     private HexGrid _hexGrid;
 
+    void Awake()
+    {
+        _hexGrid = FindAnyObjectByType<HexGrid>();
+
+        UnitType = e_UnitType.Settler;
+    }
     public int GetMovementPoints()
     {
         return _movementPoints;
@@ -23,15 +30,4 @@ public class Unit : MonoBehaviour, IAttacking
         thingToAttack.gameObject.gameObject.GetComponent<Health>().TakeDamage(_damage);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
-    {
-        _hexGrid = FindAnyObjectByType<HexGrid>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -72,3 +72,10 @@ public class UnitManager : MonoBehaviour
         }
     }
 }
+
+public enum e_UnitType
+{
+    Settler,
+    Warrior,
+    Archer
+}

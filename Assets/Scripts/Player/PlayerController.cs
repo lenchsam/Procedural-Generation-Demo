@@ -7,16 +7,19 @@ public class PlayerController : MonoBehaviour
     public TurnManager TurnManager;
     public UnitManager UnitManager;
     public PathFinding PathFinding;
+    public UIManager UIManager;
     public HexGrid HexGrid;
+
+    public bool IsPointerOverUI = false;
 
     private IState _currentState;
 
     private int _tileLayerMask;
 
+    private Unit _selectedUnitComponent;
+
     [HideInInspector] public UnityEvent<Unit> OnUnitSelected = new UnityEvent<Unit>();
     [HideInInspector] public UnityEvent<Vector2Int> OnCityFounded = new UnityEvent<Vector2Int>();
-
-
 
     void Awake()
     {
@@ -27,7 +30,10 @@ public class PlayerController : MonoBehaviour
     {
         ChangeState(new DefaultState(this));
     }
-
+    private void Update()
+    {
+        IsPointerOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+    }
     public void ChangeState(IState newState)
     {
         if (_currentState != null)
@@ -37,8 +43,6 @@ public class PlayerController : MonoBehaviour
 
         _currentState = newState;
         _currentState.Enter();
-
-        //Debug.Log($"PlayerController changed state to: {_currentState.GetType().Name}");
     }
 
     public void OnClick(InputAction.CallbackContext context)
@@ -59,10 +63,11 @@ public class PlayerController : MonoBehaviour
 
     public void NotifyUnitSelected(Unit selectedUnitComponent)
     {
+        _selectedUnitComponent = selectedUnitComponent;
         OnUnitSelected.Invoke(selectedUnitComponent);
     }
-    public void NotifyCityFounded(Vector2Int foundingPosition)
+    public void NotifyCityFounded()
     {
-        OnCityFounded.Invoke(foundingPosition);
+        OnCityFounded.Invoke(HexGrid.GetIntCordsFromPosition(_selectedUnitComponent.transform.position));
     }
 }

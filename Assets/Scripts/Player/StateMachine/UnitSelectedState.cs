@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class UnitSelectedState : IState
 {
@@ -7,6 +9,7 @@ public class UnitSelectedState : IState
     Unit _selectedUnitComponent;
 
     private List<TileScript> _validMoves;
+
     public UnitSelectedState(PlayerController playerController, Unit selectedUnit)
     {
         _playerController = playerController;
@@ -19,6 +22,9 @@ public class UnitSelectedState : IState
         _validMoves = _playerController.PathFinding.GetReachableTiles(tileScript.IntCoords, _selectedUnitComponent.GetMovementPoints());
 
         ToggleMoveHighlights(true);
+        _playerController.UIManager.UpdateUnitUI(_selectedUnitComponent.UnitType);
+
+        _playerController.NotifyUnitSelected(_selectedUnitComponent);
     }
 
     public void Exit()
@@ -28,6 +34,10 @@ public class UnitSelectedState : IState
 
     public void OnTileClicked(TileScript tile)
     {
+        //dont do anything if hovering over a UI element
+        if (_playerController.IsPointerOverUI)
+            return;
+
         // if tile is not in range return to DefaultState as cannot move or attack there
         if (!_validMoves.Contains(tile))
         {
@@ -49,6 +59,7 @@ public class UnitSelectedState : IState
                 return;
             }
         }
+
 
         //decides what the selected unit should do
         _playerController.UnitManager.HandleUnitCommand(_selectedUnitComponent, tile);
