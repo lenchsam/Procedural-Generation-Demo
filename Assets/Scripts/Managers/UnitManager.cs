@@ -23,6 +23,9 @@ public class UnitManager : MonoBehaviour
         {
             //dont need to check team as its checked before this function is called (UnitSelectedState line 30)
             selectedUnitComponent.Attack(tile.OccupiedUnit.GetComponent<Unit>());
+
+            //attacking uses all movement points.
+            selectedUnitComponent.TakeMovementPoints(selectedUnitComponent.GetMovementPoints());
         }
         else
         {
@@ -38,6 +41,7 @@ public class UnitManager : MonoBehaviour
 
             tile.GetComponent<TileScript>().OccupiedUnit = selectedUnitComponent.gameObject;
             tile.GetComponent<TileScript>().IsWalkable = false;
+            selectedUnitComponent.TakeMovementPoints(_pathFinding.CalculatePathCost(path));
         }
     }
 

@@ -21,6 +21,10 @@ public class Unit : MonoBehaviour, IAttacking
         return _movementPoints;
     }
     
+    public void TakeMovementPoints(int pointsToTake)
+    {
+        _movementPoints -= pointsToTake;
+    }
     public void Attack(Unit thingToAttack)
     {
         if(_hexGrid.DistanceBetweenTiles(_hexGrid.GetIntCordsFromPosition(this.gameObject.transform.position), _hexGrid.GetIntCordsFromPosition(thingToAttack.gameObject.transform.position)) > DamageRange)

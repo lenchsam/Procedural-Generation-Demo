@@ -12,6 +12,28 @@ public class PathFinding : MonoBehaviour
         _hexGrid = FindAnyObjectByType<HexGrid>();
     }
 
+    public int CalculatePathCost(List<GameObject> path)
+    {
+        //if the path is invalid or has no movement then the cost is 0
+        if (path == null || path.Count <= 1)
+        {
+            return 0;
+        }
+
+        int totalCost = 0;
+
+        //loop starts at 1 cuz you don't need to count the start tile
+        for (int i = 1; i < path.Count; i++)
+        {
+            TileScript tile = path[i].GetComponent<TileScript>();
+            if (tile != null)
+            {
+                totalCost += tile.MovementCost;
+            }
+        }
+
+        return totalCost;
+    }
     //for hilighting reachable tiles
     public List<TileScript> GetReachableTiles(Vector2Int startCoords, int maxMovementPoints)
     {

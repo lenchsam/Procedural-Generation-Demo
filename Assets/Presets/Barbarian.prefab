@@ -2421,6 +2421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964d1780eee0b764f96883233334a97a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitType: 0
   Team: 0
   DamageRange: 1
   _movementPoints: 1

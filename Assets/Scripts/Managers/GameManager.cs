@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour
     #region founding new city
     private void OnNewCityFound(Vector2Int location)
     {
-        Debug.Log("New city Founded at" + location);
-
         GameObject.Instantiate(_cityPrefab, _playerController.HexGrid.GetTileFromIntCords(location).transform.position, _cityPrefab.transform.rotation);
+
+        Destroy(_playerController.SelectedUnitComponent.gameObject);
 
         _playerController.ChangeState(new DefaultState(_playerController));
     }

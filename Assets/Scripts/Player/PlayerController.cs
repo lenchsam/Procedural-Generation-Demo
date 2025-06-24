@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private int _tileLayerMask;
 
-    private Unit _selectedUnitComponent;
+    public Unit SelectedUnitComponent;
 
     [HideInInspector] public UnityEvent<Unit> OnUnitSelected = new UnityEvent<Unit>();
     [HideInInspector] public UnityEvent<Vector2Int> OnCityFounded = new UnityEvent<Vector2Int>();
@@ -63,11 +63,11 @@ public class PlayerController : MonoBehaviour
 
     public void NotifyUnitSelected(Unit selectedUnitComponent)
     {
-        _selectedUnitComponent = selectedUnitComponent;
+        SelectedUnitComponent = selectedUnitComponent;
         OnUnitSelected.Invoke(selectedUnitComponent);
     }
     public void NotifyCityFounded()
     {
-        OnCityFounded.Invoke(HexGrid.GetIntCordsFromPosition(_selectedUnitComponent.transform.position));
+        OnCityFounded.Invoke(HexGrid.GetIntCordsFromPosition(SelectedUnitComponent.transform.position));
     }
 }
