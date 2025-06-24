@@ -36,7 +36,13 @@ public class GameManager : MonoBehaviour
     {
         GameObject.Instantiate(_cityPrefab, _playerController.HexGrid.GetTileFromIntCords(location).transform.position, _cityPrefab.transform.rotation);
 
+        TileScript tileScript = _playerController.HexGrid.GetTileScriptFromIntCords(location);
+        tileScript.IsWalkable = false;
+        tileScript.OccupiedUnit = null;
+        tileScript.SetStructure(eStructures.City);
+
         Destroy(_playerController.SelectedUnitComponent.gameObject);
+        tileScript.OccupiedUnit = null;
 
         _playerController.ChangeState(new DefaultState(_playerController));
     }

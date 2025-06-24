@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private int _tileLayerMask;
 
-    public Unit SelectedUnitComponent;
+    [HideInInspector] public Unit SelectedUnitComponent;
 
     [HideInInspector] public UnityEvent<Unit> OnUnitSelected = new UnityEvent<Unit>();
     [HideInInspector] public UnityEvent<Vector2Int> OnCityFounded = new UnityEvent<Vector2Int>();

@@ -1,4 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.XR;
 
 public class DefaultState : IState
 {
@@ -20,8 +23,16 @@ public class DefaultState : IState
 
     public void OnTileClicked(TileScript tile)
     {
-        
-        if(tile.OccupiedUnit == null) { return; }
+        //code for selecting structure
+        eStructures structure = tile.GetStructureType();
+        if (structure != eStructures.None)
+        {
+            Debug.Log($"Structure Selected: {structure}");
+            _playerController.ChangeState(new StructureSelectedState(_playerController, structure));
+        }
+
+        //code for selecting unit
+        if (tile.OccupiedUnit == null) { return; }
 
         Unit unitComponent = tile.OccupiedUnit.GetComponent<Unit>();
 
@@ -31,7 +42,6 @@ public class DefaultState : IState
             _playerController.ChangeState(new UnitSelectedState(_playerController, unitComponent));
             return;
         }
-
     }
 
 }

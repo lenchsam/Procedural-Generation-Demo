@@ -9,12 +9,15 @@ public class TileScript : MonoBehaviour
     public eBiomes Biome;
     public int MovementCost = 1;
 
-    public void Constructor(bool isWalkable, Vector2Int intCords, eTileType tileType, eBiomes biome){
+    [SerializeField] private eStructures _occupiedStructure = eStructures.None;
+    public void Constructor(bool isWalkable, Vector2Int intCords, eTileType tileType, eBiomes biome)
+    {
         IsWalkable = isWalkable;
         IntCoords = intCords;
         TileType = tileType;
         Biome = biome;
-        if(TileType == eTileType.Ocean){
+        if (TileType == eTileType.Ocean)
+        {
             IsWalkable = false;
         }
     }
@@ -27,5 +30,14 @@ public class TileScript : MonoBehaviour
     public void Unhighlight()
     {
         GetComponent<Renderer>().material.color = Color.white;
+    }
+
+    public void SetStructure(eStructures structure)
+    {
+        _occupiedStructure = structure;
+    }
+    public eStructures GetStructureType()
+    {
+        return _occupiedStructure;
     }
 }

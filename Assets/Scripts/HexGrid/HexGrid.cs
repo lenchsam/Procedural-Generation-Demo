@@ -135,3 +135,8 @@ public enum eTileType{
     Coast,
     Mountain
 }
+
+public enum eStructures{
+    None,
+    City
+}

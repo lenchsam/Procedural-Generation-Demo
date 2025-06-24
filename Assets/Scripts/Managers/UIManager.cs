@@ -4,11 +4,15 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [Header("Unit Specific UI Elements")]
-    public GameObject foundCityButton;
+    [SerializeField] private GameObject _foundCityButton;
+
+    [Header("Structure Specific UI Elements")]
+    [SerializeField] private GameObject _cityButton;
 
     private void Start()
     {
         DisableUnitUI();
+        DisableStructureUI();
     }
     public void UpdateUnitUI(e_UnitType unitType)
     {
@@ -19,7 +23,7 @@ public class UIManager : MonoBehaviour
         switch (unitType)
         {
             case e_UnitType.Settler:
-                foundCityButton.SetActive(true);
+                _foundCityButton.SetActive(true);
                 break;
             case e_UnitType.Warrior:
                 
@@ -29,9 +33,25 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+    public void UpdateStructureUI(eStructures structure)
+    {
+        switch (structure)
+        {
+            case eStructures.None:
+                
+                break;
+            case eStructures.City:
+                _cityButton.SetActive(true);
+                break;
+        }
+    }
 
     public void DisableUnitUI()
     {
-        foundCityButton.SetActive(false);
+        _foundCityButton.SetActive(false);
+    }
+    public void DisableStructureUI()
+    {
+        _cityButton.SetActive(false);
     }
 }
