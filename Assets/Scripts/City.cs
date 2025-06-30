@@ -19,6 +19,12 @@ public class City : MonoBehaviour
         Team = team;
     }   
 
+    void SetTurnsToComplete()
+    {
+        if (buildQueue.Count == 0) { return; }
+
+        turnsUntilConstructionComplete = buildQueue.Peek().TurnsToCraft;
+    }
 
     private void Start()
     {
@@ -39,7 +45,6 @@ public class City : MonoBehaviour
         //if its not our turn then do nothing
         if (_turnManager.GetCurrentPlayer() != Team) { return; }
 
-        Debug.Log("taking 1 from turn");
         // - 1 from turns remaining for current item to be built, it clamps to 0 so it doesnt go negative
         turnsUntilConstructionComplete -= 1;
         
@@ -58,6 +63,7 @@ public class City : MonoBehaviour
             tile.GetComponent<TileScript>().OccupiedUnit = unit;
             unit.GetComponent<Unit>().Team = _turnManager.GetCurrentPlayer();
 
+            SetTurnsToComplete();
 
         }
     }
@@ -65,5 +71,10 @@ public class City : MonoBehaviour
     public void AddToBuildQueue(CraftablesScriptableObject craftablesScriptableObject)
     {
         buildQueue.Enqueue(craftablesScriptableObject);
+
+        if (buildQueue.Count == 1)
+        {
+            SetTurnsToComplete();
+        }
     }
 }

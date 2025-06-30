@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb86d4457dbeac3479da3743f4161352, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  TurnsToCraft: 1
+  TurnsToCraft: 2
   CraftablePrefab: {fileID: 8018593637340118393, guid: efc4f26f13528ff4db68f507fb4fa0e5,
     type: 3}
