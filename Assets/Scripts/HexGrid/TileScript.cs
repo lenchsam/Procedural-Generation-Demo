@@ -5,6 +5,7 @@ public class TileScript : MonoBehaviour
     public bool IsWalkable;
     public Vector2Int IntCoords;
     public GameObject OccupiedUnit;
+    public GameObject OccupiedBuilding;
     public eTileType TileType;
     public eBiomes Biome;
     public int MovementCost = 1;
@@ -32,9 +33,10 @@ public class TileScript : MonoBehaviour
         GetComponent<Renderer>().material.color = Color.white;
     }
 
-    public void SetStructure(eStructures structure)
+    public void SetStructure(eStructures eStructure, GameObject structure)
     {
-        _occupiedStructure = structure;
+        _occupiedStructure = eStructure;
+        OccupiedBuilding = structure;
     }
     public eStructures GetStructureType()
     {

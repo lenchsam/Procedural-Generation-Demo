@@ -34,12 +34,15 @@ public class GameManager : MonoBehaviour
     #region founding new city
     private void OnNewCityFound(Vector2Int location)
     {
-        GameObject.Instantiate(_cityPrefab, _playerController.HexGrid.GetTileFromIntCords(location).transform.position, _cityPrefab.transform.rotation);
+        GameObject city = Instantiate(_cityPrefab, _playerController.HexGrid.GetTileFromIntCords(location).transform.position, _cityPrefab.transform.rotation);
+        City cityScript = city.AddComponent<City>();
+        cityScript.SetTeam(_turnManager.GetCurrentPlayer());
+
 
         TileScript tileScript = _playerController.HexGrid.GetTileScriptFromIntCords(location);
         tileScript.IsWalkable = false;
         tileScript.OccupiedUnit = null;
-        tileScript.SetStructure(eStructures.City);
+        tileScript.SetStructure(eStructures.City, city);
 
         Destroy(_playerController.SelectedUnitComponent.gameObject);
         tileScript.OccupiedUnit = null;

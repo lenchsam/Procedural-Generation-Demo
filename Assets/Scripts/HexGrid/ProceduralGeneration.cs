@@ -206,12 +206,8 @@ public class ProceduralGeneration : MonoBehaviour
                 } else if (height == _upperLayerHeight && height < _topHeightThreshold) {//if its the upper layer
                     instantiated = Instantiate(_grassPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
                     tileType = eTileType.Grass;
-
-                    // Instantiate a base object under the upper layer at the lower layer's height
-                    //Vector3 basePosition = new Vector3(hexCoords.x, _lowerLayerHeight, hexCoords.y);
-                    //var baseInst = Instantiate(TopBasePrefab, basePosition, Quaternion.Euler(0, 90, 0), TilesParent.transform);
-                    //GameObjectUtility.SetStaticEditorFlags(baseInst, StaticEditorFlags.BatchingStatic);
-                }else if(height == _topHeightThreshold)
+                }
+                else if(height == _topHeightThreshold)
                 {
                     instantiated = Instantiate(_grassPrefab, position, Quaternion.Euler(0, 90, 0), _tilesParent.transform);
                     tileType = eTileType.Grass;

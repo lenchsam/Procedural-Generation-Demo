@@ -21,26 +21,38 @@ public class DefaultState : IState
         
     }
 
+    public void OnBuildUnitRequested(CraftablesScriptableObject craftable)
+    {
+        //not needed for this state
+    }
+
     public void OnTileClicked(TileScript tile)
     {
-        //code for selecting structure
-        eStructures structure = tile.GetStructureType();
-        if (structure != eStructures.None)
-        {
-            Debug.Log($"Structure Selected: {structure}");
-            _playerController.ChangeState(new StructureSelectedState(_playerController, structure));
-        }
 
         //code for selecting unit
-        if (tile.OccupiedUnit == null) { return; }
+        Unit unitComponent = tile.OccupiedUnit?.GetComponent<Unit>();
 
-        Unit unitComponent = tile.OccupiedUnit.GetComponent<Unit>();
+        if (tile.OccupiedUnit != null) {
+            if (unitComponent.Team == _playerController.TurnManager.GetCurrentPlayer())
+            {
+                // If it's our unit, change to the UnitSelectedState.
+                _playerController.ChangeState(new UnitSelectedState(_playerController, unitComponent));
+                return;
+            }
+        }
 
-        if (unitComponent.Team == _playerController.TurnManager.GetCurrentPlayer())
+        //code for selecting structure
+        eStructures structure = tile.GetStructureType();
+        
+        if (structure != eStructures.None && tile.OccupiedBuilding != null)
         {
-            // If it's our unit, change to the UnitSelectedState.
-            _playerController.ChangeState(new UnitSelectedState(_playerController, unitComponent));
-            return;
+            City cityComponent = tile.OccupiedBuilding.GetComponent<City>();
+            if (cityComponent != null && cityComponent.Team != _playerController.TurnManager.GetCurrentPlayer())
+            {
+                //city not owned by current player
+                return;
+            }
+            _playerController.ChangeState(new StructureSelectedState(_playerController, structure, tile.OccupiedBuilding));
         }
     }
 

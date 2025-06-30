@@ -45,6 +45,7 @@ public class TurnManager : MonoBehaviour
         _cameraTransform.position = _players[_currentPlayerIndex].SavedCameraPosition;
     }
 
+    //called by end turn UI button
     public void EndTurn()
     {
         PlayerData currentPlayer = GetCurrentPlayerData();

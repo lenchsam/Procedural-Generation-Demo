@@ -30,6 +30,11 @@ public class UnitSelectedState : IState
         ToggleMoveHighlights(false);
     }
 
+    public void OnBuildUnitRequested(CraftablesScriptableObject craftable)
+    {
+        //not needed for this state
+    }
+
     public void OnTileClicked(TileScript tile)
     {
         //dont do anything if hovering over a UI element

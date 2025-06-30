@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MapParametersScriptableObject", menuName = "ScriptableObjects/MapParametersScriptableObject")]
+[CreateAssetMenu(fileName = "MapParametersScriptableObject", menuName = "Scriptable Objects/MapParametersScriptableObject")]
 public class MapScriptableObject : ScriptableObject
 {
     public Vector2Int MapSize = new Vector2Int(20, 20);

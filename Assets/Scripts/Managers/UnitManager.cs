@@ -8,15 +8,6 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private HexGrid _hexGrid;
     [SerializeField] private PathFinding _pathFinding;
 
-    void Start()
-    {
-        _turnManager.OnTurnEnd.AddListener(HandleTurnEnd);
-    }
-    private void OnDestroy()
-    {
-        _turnManager.OnTurnEnd.RemoveListener(HandleTurnEnd);
-    }
-
     public void HandleUnitCommand(Unit selectedUnitComponent, TileScript tile)
     {
         if (tile.OccupiedUnit != null)
@@ -43,11 +34,6 @@ public class UnitManager : MonoBehaviour
             tile.GetComponent<TileScript>().IsWalkable = false;
             selectedUnitComponent.TakeMovementPoints(_pathFinding.CalculatePathCost(path));
         }
-    }
-
-    private void HandleTurnEnd()
-    {
-
     }
 
     private IEnumerator lerpToPosition(Vector3 startPosition, List<GameObject> targetPositions, float unitMovementSpeed, GameObject gameObjectToMove)

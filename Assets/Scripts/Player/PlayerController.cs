@@ -61,6 +61,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnBuildUnitRequested(CraftablesScriptableObject craftable)
+    {
+        _currentState.OnBuildUnitRequested(craftable);
+    }
+
     public void NotifyUnitSelected(Unit selectedUnitComponent)
     {
         SelectedUnitComponent = selectedUnitComponent;
