@@ -13,8 +13,6 @@ public class Unit : MonoBehaviour, IAttacking
     void Awake()
     {
         _hexGrid = FindAnyObjectByType<HexGrid>();
-
-        UnitType = e_UnitType.Settler;
     }
     public int GetMovementPoints()
     {

@@ -32,7 +32,6 @@ public class StructureSelectedState : IState
         if (cityComponent == null){ return; }
 
         cityComponent.AddToBuildQueue(craftable);
-        Debug.Log($"Build request for {craftable.name} sent");
     }
 
     public void OnTileClicked(TileScript tile)

@@ -51,7 +51,6 @@ public class City : MonoBehaviour
         //if building is complete
         if (turnsUntilConstructionComplete <= 0)
         {
-            Debug.Log($"City {Team} has completed building {buildQueue.Peek().CraftablePrefab.name}");
 
             CraftablesScriptableObject thingToBuild = buildQueue.Dequeue(); 
 
