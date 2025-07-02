@@ -20,6 +20,8 @@ This project utilises a variety of different procedural generation techniques to
 ## Useful Links
  - [Procedural Generation Class](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/ProceduralGeneration.cs)
  - [Grid Functions Class](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/HexGrid.cs)
+ - [State Machine](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/Player/PlayerController.cs)
+ - [States Folder](https://github.com/lenchsam/Procedural-Generation-Demo/tree/main/Assets/Scripts/Player/StateMachine)
 
 ## Features
 
