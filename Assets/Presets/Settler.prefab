@@ -113,4 +113,4 @@ MonoBehaviour:
   UnitType: 0
   Team: 0
   DamageRange: 0
-  _movementPoints: 3
+  _MaxMovementPoints: 3
