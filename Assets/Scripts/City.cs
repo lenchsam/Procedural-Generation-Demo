@@ -12,6 +12,7 @@ public class City : MonoBehaviour
     [SerializeField] private TurnManager _turnManager;
     [SerializeField] private HexGrid _hexGrid;
 
+    private UIManager _UIManager;
     public e_Team Team;
 
     public void SetTeam(e_Team team)
@@ -30,6 +31,7 @@ public class City : MonoBehaviour
     {
         _turnManager = FindFirstObjectByType<TurnManager>();
         _hexGrid = FindFirstObjectByType<HexGrid>();
+        _UIManager = FindFirstObjectByType<UIManager>();
 
         _turnManager.OnTurnEnd.AddListener(TurnEnded);
     }
@@ -69,11 +71,20 @@ public class City : MonoBehaviour
 
     public void AddToBuildQueue(CraftablesScriptableObject craftablesScriptableObject)
     {
+        //done because the UI can only hold 4 items in the queue at once, so we limit the queue size to 4
+        if (buildQueue.Count >= 4) { return; }
+
+         _UIManager.AddToCraftingQueue(craftablesScriptableObject.CraftablePrefab.GetComponent<Unit>().UnitType);
+
         buildQueue.Enqueue(craftablesScriptableObject);
+
+        //TODO: Add to UI queue
 
         if (buildQueue.Count == 1)
         {
             SetTurnsToComplete();
         }
     }
+
+
 }
