@@ -78,8 +78,6 @@ public class City : MonoBehaviour
 
         buildQueue.Enqueue(craftablesScriptableObject);
 
-        //TODO: Add to UI queue
-
         if (buildQueue.Count == 1)
         {
             SetTurnsToComplete();
