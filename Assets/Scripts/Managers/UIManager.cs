@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,7 +10,10 @@ public class UIManager : MonoBehaviour
 
     [Header("Structure Specific UI Elements")]
     [SerializeField] private GameObject _cityButton;
-    [SerializeField] private GameObject _UICraftingQueue;
+    [SerializeField] private GameObject _UICraftingGameObject;
+    [SerializeField] private TMP_Text _UITurnsUntilCrafted;
+
+    private Queue<GameObject> _UICraftingQueue = new Queue<GameObject>();
 
     private void Start()
     {
@@ -42,7 +48,7 @@ public class UIManager : MonoBehaviour
                 break;
             case eStructures.City:
                 _cityButton.SetActive(true);
-                _UICraftingQueue.SetActive(true);
+                _UICraftingGameObject.SetActive(true);
                 break;
         }
     }
@@ -54,7 +60,7 @@ public class UIManager : MonoBehaviour
     public void DisableStructureUI()
     {
         _cityButton.SetActive(false);
-        _UICraftingQueue.SetActive(false);
+        _UICraftingGameObject.SetActive(false);
     }
 
     public void AddToCraftingQueue(e_UnitType unitType)
@@ -79,6 +85,18 @@ public class UIManager : MonoBehaviour
         }
 
         GameObject instantiatedObject = Instantiate(toAdd);
-        instantiatedObject.transform.SetParent(_UICraftingQueue.transform.GetChild(0), false);
+        instantiatedObject.transform.SetParent(_UICraftingGameObject.transform.GetChild(0), false);
+
+        _UICraftingQueue.Enqueue(instantiatedObject);
+    }
+
+    public void UpdateCraftingTurnsText(int turnsUntilCrafted)
+    {
+        _UITurnsUntilCrafted.text = "Turns Until Unit Crafted: " + turnsUntilCrafted.ToString();
+    }
+    internal void RemoveFromCraftingQueue()
+    {
+        GameObject craftedUnitUI = _UICraftingQueue.Dequeue();
+        Destroy(craftedUnitUI);
     }
 }
