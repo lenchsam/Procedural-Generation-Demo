@@ -228,6 +228,8 @@ public class ProceduralGeneration : MonoBehaviour
                 
                 _hexGrid.AddToTilesList(instantiated, instantiated.GetComponent<TileScript>());
 
+                if (_fogOfWar.ShowFOW) { _fogOfWar.AddFogOfWarTile(tileInstScript); }
+
             }
         }
         OnMapGenerated?.Invoke();

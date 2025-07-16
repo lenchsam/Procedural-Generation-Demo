@@ -69,15 +69,12 @@ public class UIManager : MonoBehaviour
         switch (unitType)
         {
             case e_UnitType.Settler:
-                Debug.Log("Settler");
                 toAdd = Resources.Load<GameObject>("Presets/UI/UI_Settler");
                 break;
             case e_UnitType.Warrior:
-                Debug.Log("warrior");
                 toAdd = Resources.Load<GameObject>("Presets/UI/UI_Warrior");
                 break;
             case e_UnitType.Archer:
-                Debug.Log("archer");
                 toAdd = Resources.Load<GameObject>("Presets/UI/UI_Archer");
                 break;
             default:

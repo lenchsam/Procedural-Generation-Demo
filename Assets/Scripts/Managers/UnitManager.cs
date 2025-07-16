@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TerrainUtils;
 public class UnitManager : MonoBehaviour
 {
 
     [SerializeField] private TurnManager _turnManager;
     [SerializeField] private HexGrid _hexGrid;
     [SerializeField] private PathFinding _pathFinding;
+    [SerializeField] private FogOfWar _fogOfWar;
 
     public void HandleUnitCommand(Unit selectedUnitComponent, TileScript tile)
     {
@@ -33,6 +35,8 @@ public class UnitManager : MonoBehaviour
             tile.GetComponent<TileScript>().OccupiedUnit = selectedUnitComponent.gameObject;
             tile.GetComponent<TileScript>().IsWalkable = false;
             selectedUnitComponent.TakeMovementPoints(_pathFinding.CalculatePathCost(path));
+
+            _fogOfWar.RevealTile(tile);
         }
     }
 

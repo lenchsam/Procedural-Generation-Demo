@@ -8,6 +8,7 @@ public class TurnManager : MonoBehaviour
 
     [SerializeField] private HexGrid _hexGrid;
     [SerializeField] Transform _cameraTransform;
+    [SerializeField] private FogOfWar _fogOfWar;
 
     [SerializeField] private List<PlayerData> _players = new List<PlayerData>();
     private int _currentPlayerIndex = 0;
@@ -15,6 +16,14 @@ public class TurnManager : MonoBehaviour
     public PlayerData GetCurrentPlayerData()
     {
         return _players[_currentPlayerIndex];
+    }
+    private PlayerData GetPreviousPlayerData()
+    {
+        if (_currentPlayerIndex == 0)
+        {
+            return _players[_players.Count - 1];
+        }
+        return _players[_currentPlayerIndex - 1];
     }
     public e_Team GetCurrentPlayer()
     {
@@ -34,14 +43,26 @@ public class TurnManager : MonoBehaviour
                 _hexGrid.GetTileFromIntCords(startPositions[i]).transform.position.z
             );
 
-            _players.Add(new PlayerData(team, initialCamPos));
+            PlayerData player = new PlayerData(team, initialCamPos);
+            _players.Add(player);
 
             GameObject unit = GameObject.Instantiate(startUnitPrefab, _hexGrid.GetTileFromIntCords(startPositions[i]).transform.position, Quaternion.identity);
             _hexGrid.GetTileScriptFromIntCords(startPositions[i]).OccupiedUnit = unit;
             unit.GetComponent<Unit>().Team = team;
 
+            _currentPlayerIndex = i;
+
+            if (_fogOfWar.ShowFOW)
+            {
+                _fogOfWar.RevealTile(_hexGrid.GetTileScriptFromIntCords(startPositions[i]));
+            }
+
+            int loggedPlayerIndex = _currentPlayerIndex;
+            _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+            ChangeFOW(GetCurrentPlayerData().RevealedTiles, GetPreviousPlayerData().RevealedTiles);
         }
 
+        _currentPlayerIndex = 0;
         _cameraTransform.position = _players[_currentPlayerIndex].SavedCameraPosition;
     }
 
@@ -58,6 +79,8 @@ public class TurnManager : MonoBehaviour
 
         ChangeCamera(nextPlayer.SavedCameraPosition);
 
+        ChangeFOW(nextPlayer.RevealedTiles, currentPlayer.RevealedTiles);
+
         PlayerController playerController = FindFirstObjectByType<PlayerController>();
         playerController.ChangeState(new DefaultState(playerController));
 
@@ -69,12 +92,18 @@ public class TurnManager : MonoBehaviour
         _cameraTransform.position = newPosition;
     }
 
-    //private void ChangeFOW(List<Vector2Int> RevealedTiles, List<Vector2Int> TilesToBlock){
-    //    foreach(Vector2Int tileCords in RevealedTiles){
-    //        _hexGrid.GetTileScriptFromIntCords(tileCords).Reveal();
-    //    }
-    //    foreach(Vector2Int tileCords in TilesToBlock){
-    //        _hexGrid.GetTileScriptFromIntCords(tileCords).ReBlock();
-    //    }
-    //}
+    private void ChangeFOW(List<Vector2Int> RevealedTiles, List<Vector2Int> TilesToBlock)
+    {
+        List<Vector2Int> revealCopy = new List<Vector2Int>(RevealedTiles);
+        List<Vector2Int> blockCopy = new List<Vector2Int>(TilesToBlock);
+
+        foreach (Vector2Int tileCords in revealCopy)
+        {
+            _hexGrid.GetTileScriptFromIntCords(tileCords).Reveal();
+        }
+        foreach (Vector2Int tileCords in blockCopy)
+        {
+            _hexGrid.GetTileScriptFromIntCords(tileCords).ReBlock();
+        }
+    }
 }
