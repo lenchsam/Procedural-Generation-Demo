@@ -17,6 +17,7 @@ public class FogOfWar : MonoBehaviour
     }
     public void RevealTile(TileScript tile)
     {
+        if(!ShowFOW) return;
         tile.Reveal();
         foreach (GameObject neighbour in _hexGrid.GetSurroundingTiles(tile.gameObject))
         {

@@ -59,7 +59,9 @@ public class TurnManager : MonoBehaviour
 
             int loggedPlayerIndex = _currentPlayerIndex;
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
+
             ChangeFOW(GetCurrentPlayerData().RevealedTiles, GetPreviousPlayerData().RevealedTiles);
+            
         }
 
         _currentPlayerIndex = 0;
@@ -94,6 +96,7 @@ public class TurnManager : MonoBehaviour
 
     private void ChangeFOW(List<Vector2Int> RevealedTiles, List<Vector2Int> TilesToBlock)
     {
+        if(!_fogOfWar.ShowFOW) return;
         List<Vector2Int> revealCopy = new List<Vector2Int>(RevealedTiles);
         List<Vector2Int> blockCopy = new List<Vector2Int>(TilesToBlock);
 
