@@ -1,9 +1,9 @@
-# Procedural Generation Demo
+# Strategy Game Framework
 
-Hi! This project shows **Procedural Generation** in **C#** using **Unity**. This readme file will explain all of the features currently implemented, as well as the future for the project as it is still in active development (although slowly).
+Hi! This project shows **Procedural Generation** and other features needed in a strategy game such as turn based crafting in **C#** using **Unity**. This readme file will explain all of the features implemented.
+
 ## Table of Contents
-- [Procedural Generation Demo](#procedural-generation-demo)
-  * [About](#about)
+- [Strategy Game Framework](#strategy-game-framework)
   * [Useful Links](#useful-links)
   * [Features](#features)
   * [Getting Started](#getting-started)
@@ -14,9 +14,8 @@ Hi! This project shows **Procedural Generation** in **C#** using **Unity**. This
   * [Future Features](#potential-future-features)
 - [Contact](#contact)
 
-## About
+![Unity_nHXMKcJvtb](https://github.com/user-attachments/assets/e1623fff-66db-4fcf-adc5-e17265633e5c)
 
-This project utilises a variety of different procedural generation techniques to achieve a hexagon grid-based map. These include poisson disc sampling, perlin noise, and more. It was originally inspired by a mobile game called *The Battle of Polytopia*; I wanted to replicate this in my own way. It's currently just a programming adventure for me, but I aim to add some unique and well designed mechanics in the future. It has some basic features like unit movement, and city placement. This is just intended as a project for me to learn different things like saving to files, algorithms etc. For that reason, it is not intended to be a full featured, polished game.
 ## Useful Links
  - [Procedural Generation Class](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/ProceduralGeneration.cs)
  - [Grid Functions Class](https://github.com/lenchsam/Procedural-Generation-Demo/blob/main/Assets/Scripts/HexGrid/HexGrid.cs)
@@ -53,6 +52,7 @@ The variables that you'll probably want to have fun with are located in the ----
  - make sure to also lower poisson-disc radius when making map size smaller in editor. If this isn't done, it may freeze the editor.
 
 ## Potential Future Features
+Should this framework be taken further, here are some of the extra mechanics that may be put in.
  - Functioning Districts
  - Resource farming
  - System to buy/make units, districts and potentially more
