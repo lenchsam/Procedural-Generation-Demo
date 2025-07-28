@@ -31,6 +31,7 @@ Hi! This project shows **Procedural Generation** and other features needed in a 
  - Turn-based combat
  - A* pathfinding
  - Different map sizes
+ - Turn based Unit Crafting
 
 ## Getting Started
 Note that I used paid assets for the models and other paid plugins while creating this project, these are not found in this github. 
